@@ -4,9 +4,7 @@ const settings: Settings = {
   name: "words-frontend",
   state: {
     frontity: {
-      url: "https://test.frontity.org",
-      title: "Test Frontity Blog",
-      description: "WordPress installation for Frontity development",
+      title: "Words by Orballo",
     },
   },
   packages: ["words-theme", "@orballo/very-tiny-router"],

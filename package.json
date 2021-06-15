@@ -17,6 +17,7 @@
   },
   "prettier": {},
   "dependencies": {
+    "@frontity/components": "^1.8.0",
     "@frontity/core": "^1.14.2",
     "@orballo/very-tiny-router": "^0.1.2",
     "frontity": "^1.16.0",
