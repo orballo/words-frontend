@@ -1,13 +1,23 @@
-import { Package, MergePackages, AsyncAction, Frontity } from "@frontity/types";
+import {
+  Package,
+  MergePackages,
+  Action,
+  AsyncAction,
+  Frontity,
+} from "@frontity/types";
 import VeryTinyRouter from "@orballo/very-tiny-router/types";
 
 export default interface Theme extends Package {
   name: "words-theme";
   state: {
     auth: {
+      backend: string;
+      user?: Record<string, any>;
       signinForm: {
         email: string;
         code: string;
+        isSubmiting: boolean;
+        isAwaitingCode: boolean;
         isError: boolean;
         errorMessage: string;
       };
@@ -24,6 +34,7 @@ export default interface Theme extends Package {
   actions: {
     auth: {
       signin: AsyncAction<Packages>;
+      updateSigninField: Action<Packages, string, string>;
     };
   };
 }

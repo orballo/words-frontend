@@ -11,7 +11,7 @@ const Main: React.FC = () => {
   const logoStyles = css`
     width: 300px;
     display: block;
-    margin: 40px auto;
+    margin: 60px auto;
   `;
 
   return (

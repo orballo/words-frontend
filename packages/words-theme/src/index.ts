@@ -9,9 +9,12 @@ const theme: Theme = {
   },
   state: {
     auth: {
+      backend: "http://localhost:4000",
       signinForm: {
         email: "",
         code: "",
+        isSubmiting: false,
+        isAwaitingCode: false,
         isError: false,
         errorMessage: "",
       },
@@ -27,12 +30,36 @@ const theme: Theme = {
   },
   actions: {
     auth: {
-      signin: async () => {
-        const result = await fetch("http://localhost:4000/auth/signin", {
+      signin: async ({ state }) => {
+        const { signinForm } = state.auth;
+
+        signinForm.isSubmiting = true;
+
+        const endpoint = new URL("/auth/signin", state.auth.backend);
+        const payload = { email: signinForm.email, code: signinForm.code };
+        const result = await fetch(endpoint.toString(), {
           method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
         });
 
-        console.log("result:", result);
+        if (result.status !== 200) {
+          const body = await result.json();
+          signinForm.isError = true;
+          signinForm.errorMessage = body.error.message;
+        } else if (result.status === 200 && !payload.code) {
+          signinForm.isAwaitingCode = true;
+          console.log("Verification code:", (await result.json()).code);
+        } else {
+          const body = await result.json();
+          state.auth.user = body;
+          console.log("User:", body);
+        }
+
+        signinForm.isSubmiting = false;
+      },
+      updateSigninField: ({ state }) => (name, value) => {
+        state.auth.signinForm[name] = value;
       },
     },
   },
