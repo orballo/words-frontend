@@ -28,6 +28,7 @@ export default interface Theme extends Package {
         bgTwo: string;
         textOne: string;
         textTwo: string;
+        textError: string;
       };
     };
   };

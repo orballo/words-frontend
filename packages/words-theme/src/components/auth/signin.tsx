@@ -1,5 +1,8 @@
 import React from "react";
 import { connect, useConnect, css } from "frontity";
+import InputText from "./input-text";
+import MessageError from "./message-error";
+import ButtonSubmit from "./button-submit";
 import { Packages } from "../../../types";
 
 const SignIn: React.FC = () => {
@@ -28,83 +31,48 @@ const SignIn: React.FC = () => {
     padding-top: 40px;
     box-sizing: border-box;
     max-width: 375px;
+    border-radius: 8px;
   `;
 
   const titleStyles = css`
     text-transform: uppercase;
     font-size: 24px;
     margin: 0;
-    margin-bottom: 12px;
-  `;
-
-  const labelStyles = css`
-    display: block;
-    margin-bottom: 8px;
-    font-size: 16px;
-  `;
-
-  const inputStyles = css`
-    display: block;
-    height: 44px;
-    box-sizing: border-box;
-    border: none;
-    background-color: ${state.theme.colors.bgOne};
-    color: ${state.theme.colors.textOne};
-    width: 100%;
-    outline: none;
-    padding: 0 12px;
-    font-size: 16px;
-    margin-bottom: 20px;
-
-    &::placeholder {
-      color: #888888;
-    }
-  `;
-
-  const submitStyles = css`
-    margin-top: 24px;
-    min-height: 44px;
-    box-sizing: border-box;
-    width: 100%;
-    display: block;
-    padding: 0 12px;
-    font-size: 16px;
-    border: 2px solid;
-    color: ${state.theme.colors.textTwo};
-    background-color: ${state.theme.colors.bgTwo};
+    margin-bottom: 16px;
+    height: 36px;
   `;
 
   return (
     <div css={container}>
       <form onSubmit={handleSubmit}>
         <h2 css={titleStyles}>Sign in</h2>
-        <label>
-          <span css={labelStyles}>Enter your email</span>
-          <input
-            type="text"
-            name="email"
-            css={inputStyles}
-            value={signinForm.email}
-            onChange={handleChange}
-            placeholder="email@example.com"
-          />
-        </label>
+        <InputText
+          label="Enter your email"
+          name="email"
+          value={signinForm.email}
+          onChange={handleChange}
+          placeholder="email@example.com"
+          autoFocus
+          disabled={signinForm.isAwaitingCode}
+        />
         {signinForm.isAwaitingCode && (
-          <label>
-            <span css={labelStyles}>Enter the verification code</span>
-            <input
-              type="text"
-              name="code"
-              css={inputStyles}
-              value={signinForm.code}
-              onChange={handleChange}
-              placeholder="Verification code"
-            />
-          </label>
+          <InputText
+            label="Enter the verification code"
+            name="code"
+            value={signinForm.code}
+            onChange={handleChange}
+            placeholder="Verification code"
+            autoFocus
+          />
         )}
-        <button type="submit" css={submitStyles}>
-          {signinForm.isAwaitingCode ? "Sign in" : "Get verification code"}
-        </button>
+        {signinForm.isError && (
+          <MessageError message={signinForm.errorMessage} />
+        )}
+        <ButtonSubmit
+          label={
+            signinForm.isAwaitingCode ? "Sign in" : "Get verification code"
+          }
+        />
       </form>
     </div>
   );
