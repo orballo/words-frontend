@@ -16,7 +16,7 @@ const theme: Theme = {
       isDashboard: ({ state }) => state.router.link === "/dashboard",
     },
     auth: {
-      backend: "http://192.168.0.7:4000",
+      backend: "http://words.local:4000",
       signinForm: {
         email: "",
         code: "",
@@ -48,6 +48,9 @@ const theme: Theme = {
   },
   actions: {
     auth: {
+      beforeSSR: ({ state }) => async ({ ctx }) => {
+        console.log("ctx:", ctx.cookies.get("words_auth"));
+      },
       signin: async ({ state }) => {
         const { signinForm } = state.auth;
 
@@ -67,6 +70,7 @@ const theme: Theme = {
         };
         const result = await fetch(endpoint.toString(), {
           method: "POST",
+          credentials: "include",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
         });
@@ -116,6 +120,7 @@ const theme: Theme = {
         };
         const result = await fetch(endpoint.toString(), {
           method: "POST",
+          credentials: "include",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
         });
