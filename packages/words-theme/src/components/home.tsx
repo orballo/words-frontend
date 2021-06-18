@@ -22,10 +22,13 @@ const Main: React.FC = () => {
 
   const descriptionStyles = css`
     padding: 0 44px;
-    display: inline-block;
+    display: block;
     text-align: center;
     font-weight: 300;
     font-size: 20px;
+    max-width: 360px;
+    margin-left: auto;
+    margin-right: auto;
 
     span {
       background-color: ${state.theme.colors.bgOne};
