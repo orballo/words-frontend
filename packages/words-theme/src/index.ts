@@ -13,7 +13,16 @@ const theme: Theme = {
       signinForm: {
         email: "",
         code: "",
-        isSubmiting: false,
+        isSubmitting: false,
+        isAwaitingCode: false,
+        isError: false,
+        errorMessage: "",
+      },
+      signupForm: {
+        email: "",
+        username: "",
+        code: "",
+        isSubmitting: false,
         isAwaitingCode: false,
         isError: false,
         errorMessage: "",
@@ -23,6 +32,7 @@ const theme: Theme = {
       colors: {
         bgOne: "#293B5F",
         bgTwo: "#FBFBFB",
+        bgThree: "#7587ac",
         textOne: "#FFFFFF",
         textTwo: "#333333",
         textError: "#CC0000",
@@ -41,7 +51,7 @@ const theme: Theme = {
           return;
         }
 
-        signinForm.isSubmiting = true;
+        signinForm.isSubmitting = true;
 
         const endpoint = new URL("/auth/signin", state.auth.backend);
         const payload = { email: signinForm.email, code: signinForm.code };
@@ -64,7 +74,7 @@ const theme: Theme = {
           console.log("User:", body);
         }
 
-        signinForm.isSubmiting = false;
+        signinForm.isSubmitting = false;
       },
       updateSigninField: ({ state }) => (name, value) => {
         const { signinForm } = state.auth;
@@ -74,6 +84,57 @@ const theme: Theme = {
         if (signinForm.isError) {
           signinForm.isError = false;
           signinForm.errorMessage = "";
+        }
+      },
+      signup: async ({ state }) => {
+        const { signupForm } = state.auth;
+
+        if (signupForm.isAwaitingCode && !signupForm.code) {
+          signupForm.isError = true;
+          signupForm.errorMessage =
+            "Please enter the verification code sent to your email.";
+          return;
+        }
+
+        signupForm.isSubmitting = true;
+
+        const endpoint = new URL("/auth/signup", state.auth.backend);
+        const payload = {
+          email: signupForm.email,
+          username: signupForm.username,
+          code: signupForm.code,
+        };
+        const result = await fetch(endpoint.toString(), {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+
+        if (result.status !== 200) {
+          const body = await result.json();
+          signupForm.isError = true;
+          signupForm.errorMessage = body.error.message;
+        } else if (result.status === 200 && !signupForm.code) {
+          signupForm.isAwaitingCode = true;
+          console.log("Verification code:", (await result.json()).code);
+        } else {
+          const body = await result.json();
+          state.auth.user = body;
+          console.log("User:", body);
+        }
+
+        signupForm.isSubmitting = false;
+
+        console.log("signup!");
+      },
+      updateSignupField: ({ state }) => (name, value) => {
+        const { signupForm } = state.auth;
+
+        signupForm[name] = value;
+
+        if (signupForm.isError) {
+          signupForm.isError = false;
+          signupForm.errorMessage = "";
         }
       },
     },

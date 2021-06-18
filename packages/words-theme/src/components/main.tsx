@@ -1,8 +1,7 @@
 import React from "react";
 import { connect, useConnect, css } from "frontity";
 import Logo from "./logo";
-import SignIn from "./auth/signin";
-import SignUp from "./auth/signup";
+import Auth from "./auth";
 import { Packages } from "../../types";
 
 const Main: React.FC = () => {
@@ -17,8 +16,7 @@ const Main: React.FC = () => {
   return (
     <>
       <Logo css={logoStyles} />
-      {state.router.link === "/signin" && <SignIn />}
-      {state.router.link === "/signup" && <SignUp />}
+      <Auth />
     </>
   );
 };

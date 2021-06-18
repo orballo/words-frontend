@@ -26,10 +26,14 @@ const InputText: React.FC<Props> = ({ label, ...props }) => {
     outline: none;
     padding: 0 12px;
     font-size: 16px;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
 
     &::placeholder {
       color: ${state.theme.colors.textOne}55;
+    }
+
+    &:disabled {
+      opacity: 0.8;
     }
   `;
 

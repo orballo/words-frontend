@@ -22,18 +22,6 @@ const SignIn: React.FC = () => {
     actions.auth.signin();
   };
 
-  const container = css`
-    margin: auto;
-    color: ${state.theme.colors.textTwo};
-    background-color: ${state.theme.colors.bgTwo};
-    width: 100%;
-    padding: 52px;
-    padding-top: 40px;
-    box-sizing: border-box;
-    max-width: 375px;
-    border-radius: 8px;
-  `;
-
   const titleStyles = css`
     text-transform: uppercase;
     font-size: 24px;
@@ -43,38 +31,32 @@ const SignIn: React.FC = () => {
   `;
 
   return (
-    <div css={container}>
-      <form onSubmit={handleSubmit}>
-        <h2 css={titleStyles}>Sign in</h2>
+    <form onSubmit={handleSubmit}>
+      <h2 css={titleStyles}>Sign in</h2>
+      <InputText
+        label="Enter your email"
+        name="email"
+        value={signinForm.email}
+        onChange={handleChange}
+        placeholder="email@example.com"
+        autoFocus
+        disabled={signinForm.isAwaitingCode}
+      />
+      {signinForm.isAwaitingCode && (
         <InputText
-          label="Enter your email"
-          name="email"
-          value={signinForm.email}
+          label="Enter the verification code"
+          name="code"
+          value={signinForm.code}
           onChange={handleChange}
-          placeholder="email@example.com"
+          placeholder="Verification code"
           autoFocus
-          disabled={signinForm.isAwaitingCode}
         />
-        {signinForm.isAwaitingCode && (
-          <InputText
-            label="Enter the verification code"
-            name="code"
-            value={signinForm.code}
-            onChange={handleChange}
-            placeholder="Verification code"
-            autoFocus
-          />
-        )}
-        {signinForm.isError && (
-          <MessageError message={signinForm.errorMessage} />
-        )}
-        <ButtonSubmit
-          label={
-            signinForm.isAwaitingCode ? "Sign in" : "Get verification code"
-          }
-        />
-      </form>
-    </div>
+      )}
+      {signinForm.isError && <MessageError message={signinForm.errorMessage} />}
+      <ButtonSubmit
+        label={signinForm.isAwaitingCode ? "Sign in" : "Get verification code"}
+      />
+    </form>
   );
 };
 

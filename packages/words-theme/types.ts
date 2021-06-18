@@ -16,7 +16,16 @@ export default interface Theme extends Package {
       signinForm: {
         email: string;
         code: string;
-        isSubmiting: boolean;
+        isSubmitting: boolean;
+        isAwaitingCode: boolean;
+        isError: boolean;
+        errorMessage: string;
+      };
+      signupForm: {
+        email: string;
+        username: string;
+        code: string;
+        isSubmitting: boolean;
         isAwaitingCode: boolean;
         isError: boolean;
         errorMessage: string;
@@ -26,6 +35,7 @@ export default interface Theme extends Package {
       colors: {
         bgOne: string;
         bgTwo: string;
+        bgThree: string;
         textOne: string;
         textTwo: string;
         textError: string;
@@ -36,6 +46,8 @@ export default interface Theme extends Package {
     auth: {
       signin: AsyncAction<Packages>;
       updateSigninField: Action<Packages, string, string>;
+      signup: AsyncAction<Packages>;
+      updateSignupField: Action<Packages, string, string>;
     };
   };
 }

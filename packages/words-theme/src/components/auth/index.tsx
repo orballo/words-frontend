@@ -1,9 +1,30 @@
 import React from "react";
-import { connect, useConnect } from "frontity";
+import { connect, useConnect, css } from "frontity";
+import SignIn from "./signin";
+import SignUp from "./signup";
+import { Packages } from "../../../types";
 
 const Auth: React.FC = () => {
-  const { actions } = useConnect();
-  return <button onClick={() => actions.auth.signin()}>Signin</button>;
+  const { state } = useConnect<Packages>();
+
+  const container = css`
+    margin: auto;
+    color: ${state.theme.colors.textTwo};
+    background-color: ${state.theme.colors.bgTwo};
+    width: calc(100% - 32px);
+    padding: 52px;
+    padding-top: 40px;
+    box-sizing: border-box;
+    max-width: 375px;
+    border-radius: 8px;
+  `;
+
+  return (
+    <div css={container}>
+      {state.router.link === "/signin" && <SignIn />}
+      {state.router.link === "/signup" && <SignUp />}
+    </div>
+  );
 };
 
 export default connect(Auth);
