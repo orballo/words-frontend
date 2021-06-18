@@ -3,7 +3,6 @@ import {
   MergePackages,
   Action,
   AsyncAction,
-  ServerAction,
   Derived,
   Frontity,
 } from "@frontity/types";
@@ -53,11 +52,12 @@ export default interface Theme extends Package {
   };
   actions: {
     auth: {
-      beforeSSR: ServerAction<Packages>;
+      afterCSR: AsyncAction<Packages>;
       signin: AsyncAction<Packages>;
       updateSigninField: Action<Packages, string, string>;
       signup: AsyncAction<Packages>;
       updateSignupField: Action<Packages, string, string>;
+      signout: AsyncAction<Packages>;
     };
   };
 }

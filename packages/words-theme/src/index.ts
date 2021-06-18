@@ -48,8 +48,16 @@ const theme: Theme = {
   },
   actions: {
     auth: {
-      beforeSSR: ({ state }) => async ({ ctx }) => {
-        console.log("ctx:", ctx.cookies.get("words_auth"));
+      afterCSR: async ({ state }) => {
+        const endpoint = new URL("/auth/verify", state.auth.backend);
+        const response = await fetch(endpoint.toString(), {
+          method: "GET",
+          credentials: "include",
+        });
+
+        if (response.status === 200) {
+          state.auth.user = await response.json();
+        }
       },
       signin: async ({ state }) => {
         const { signinForm } = state.auth;
@@ -148,6 +156,15 @@ const theme: Theme = {
           signupForm.isError = false;
           signupForm.errorMessage = "";
         }
+      },
+      signout: async ({ state }) => {
+        const endpoint = new URL("/auth/signout", state.auth.backend);
+        await fetch(endpoint.toString(), {
+          method: "GET",
+          credentials: "include",
+        });
+
+        delete state.auth.user;
       },
     },
   },
