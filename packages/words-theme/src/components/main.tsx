@@ -16,7 +16,7 @@ const Main: React.FC = () => {
   return (
     <>
       <Logo css={logoStyles} />
-      <Auth />
+      {state.router.isAuth && <Auth />}
     </>
   );
 };

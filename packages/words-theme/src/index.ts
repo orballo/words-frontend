@@ -8,6 +8,15 @@ const theme: Theme = {
     theme: Root,
   },
   state: {
+    router: {
+      isAuth: ({ state }) =>
+        state.router.link === "/" ||
+        state.router.isSignin ||
+        state.router.isSignup,
+      isSignin: ({ state }) => state.router.link === "/singin",
+      isSignup: ({ state }) => state.router.link === "/signup",
+      isDashboard: ({ state }) => state.router.link === "/dashboard",
+    },
     auth: {
       backend: "http://localhost:4000",
       signinForm: {
@@ -110,7 +119,7 @@ const theme: Theme = {
           body: JSON.stringify(payload),
         });
 
-        if (result.status !== 200) {
+        if (result.status !== 200 && result.status !== 201) {
           const body = await result.json();
           signupForm.isError = true;
           signupForm.errorMessage = body.error.message;
@@ -120,12 +129,9 @@ const theme: Theme = {
         } else {
           const body = await result.json();
           state.auth.user = body;
-          console.log("User:", body);
         }
 
         signupForm.isSubmitting = false;
-
-        console.log("signup!");
       },
       updateSignupField: ({ state }) => (name, value) => {
         const { signupForm } = state.auth;

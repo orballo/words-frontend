@@ -10,7 +10,7 @@ const SignUp: React.FC = () => {
   const { signupForm } = state.auth;
 
   React.useEffect(() => {
-    if (state.auth.user) actions.router.set("/");
+    if (state.auth.user) actions.router.set("/dashboard");
   }, [state.auth.user]);
 
   const handleChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {

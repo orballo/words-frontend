@@ -21,8 +21,8 @@ const Auth: React.FC = () => {
 
   return (
     <div css={container}>
-      {state.router.link === "/signin" && <SignIn />}
-      {state.router.link === "/signup" && <SignUp />}
+      {state.router.isSignin && <SignIn />}
+      {state.router.isSignup && <SignUp />}
     </div>
   );
 };
