@@ -39,7 +39,6 @@ const SignUp: React.FC = () => {
         value={signupForm.email}
         onChange={handleChange}
         placeholder="Email"
-        autoFocus
         disabled={signupForm.isAwaitingCode}
       />
       <InputText
@@ -57,7 +56,6 @@ const SignUp: React.FC = () => {
           value={signupForm.code}
           onChange={handleChange}
           placeholder="Verification code"
-          autoFocus
         />
       )}
       {signupForm.isError && <MessageError message={signupForm.errorMessage} />}

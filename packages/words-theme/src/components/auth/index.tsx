@@ -16,7 +16,7 @@ const Auth: React.FC = () => {
     padding-top: 40px;
     box-sizing: border-box;
     max-width: 375px;
-    border-radius: 8px;
+    ${!state.router.isAuth && "display: none;"}
   `;
 
   return (

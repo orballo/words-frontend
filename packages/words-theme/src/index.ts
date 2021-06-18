@@ -9,16 +9,14 @@ const theme: Theme = {
   },
   state: {
     router: {
-      isAuth: ({ state }) =>
-        state.router.link === "/" ||
-        state.router.isSignin ||
-        state.router.isSignup,
-      isSignin: ({ state }) => state.router.link === "/singin",
+      isHome: ({ state }) => state.router.link === "/" || state.router.isAuth,
+      isSignin: ({ state }) => state.router.link === "/signin",
       isSignup: ({ state }) => state.router.link === "/signup",
+      isAuth: ({ state }) => state.router.isSignin || state.router.isSignup,
       isDashboard: ({ state }) => state.router.link === "/dashboard",
     },
     auth: {
-      backend: "http://localhost:4000",
+      backend: "http://192.168.0.7:4000",
       signinForm: {
         email: "",
         code: "",
@@ -41,7 +39,7 @@ const theme: Theme = {
       colors: {
         bgOne: "#293B5F",
         bgTwo: "#FBFBFB",
-        bgThree: "#7587ac",
+        bgThree: "#7587AC",
         textOne: "#FFFFFF",
         textTwo: "#333333",
         textError: "#CC0000",
@@ -63,7 +61,10 @@ const theme: Theme = {
         signinForm.isSubmitting = true;
 
         const endpoint = new URL("/auth/signin", state.auth.backend);
-        const payload = { email: signinForm.email, code: signinForm.code };
+        const payload = {
+          email: signinForm.email.trim(),
+          code: signinForm.code.trim(),
+        };
         const result = await fetch(endpoint.toString(), {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -109,9 +110,9 @@ const theme: Theme = {
 
         const endpoint = new URL("/auth/signup", state.auth.backend);
         const payload = {
-          email: signupForm.email,
-          username: signupForm.username,
-          code: signupForm.code,
+          email: signupForm.email.trim(),
+          username: signupForm.username.trim(),
+          code: signupForm.code.trim(),
         };
         const result = await fetch(endpoint.toString(), {
           method: "POST",

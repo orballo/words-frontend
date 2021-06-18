@@ -39,7 +39,6 @@ const SignIn: React.FC = () => {
         value={signinForm.email}
         onChange={handleChange}
         placeholder="email@example.com"
-        autoFocus
         disabled={signinForm.isAwaitingCode}
       />
       {signinForm.isAwaitingCode && (
@@ -49,7 +48,6 @@ const SignIn: React.FC = () => {
           value={signinForm.code}
           onChange={handleChange}
           placeholder="Verification code"
-          autoFocus
         />
       )}
       {signinForm.isError && <MessageError message={signinForm.errorMessage} />}

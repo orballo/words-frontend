@@ -18,6 +18,11 @@ const Styles: React.FC = () => {
     input {
       font-family: "Prompt";
     }
+
+    a {
+      color: ${state.theme.colors.textOne};
+      -webkit-tap-highlight-color: transparent;
+    }
   `;
 
   return <Global styles={styles} />;

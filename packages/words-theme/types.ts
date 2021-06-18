@@ -12,9 +12,10 @@ export default interface Theme extends Package {
   name: "words-theme";
   state: {
     router: {
-      isAuth: Derived<Packages, boolean>;
+      isHome: Derived<Packages, boolean>;
       isSignin: Derived<Packages, boolean>;
       isSignup: Derived<Packages, boolean>;
+      isAuth: Derived<Packages, boolean>;
       isDashboard: Derived<Packages, boolean>;
     };
     auth: {
