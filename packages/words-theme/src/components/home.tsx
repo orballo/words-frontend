@@ -11,6 +11,16 @@ const Main: React.FC = () => {
   const containerStyles = css`
     width: 100%;
     padding: 100px 0;
+    box-sizing: border-box;
+
+    @media (min-width: 1024px) {
+      display: flex;
+      height: 100%;
+      align-items: center;
+      justify-content: space-around;
+      max-width: 1024px;
+      margin: 0 auto;
+    }
   `;
 
   const logoStyles = css`
@@ -18,6 +28,10 @@ const Main: React.FC = () => {
     height: auto;
     display: block;
     margin: 0 auto 60px auto;
+
+    @media (min-width: 1024px) {
+      width: 280px;
+    }
   `;
 
   const descriptionStyles = css`
@@ -40,6 +54,14 @@ const Main: React.FC = () => {
     }
 
     ${state.router.isAuth && "display: none;"}
+
+    @media (min-width: 1024px) {
+      display: block;
+
+      &:last-of-type {
+        margin-bottom: 0;
+      }
+    }
   `;
 
   const linksWrapperStyles = css`
@@ -55,6 +77,10 @@ const Main: React.FC = () => {
     }
 
     ${state.router.isAuth && "display: none;"}
+
+    @media (min-width: 1024px) {
+      display: none;
+    }
   `;
 
   const linkStyles = css`

@@ -23,6 +23,14 @@ const Styles: React.FC = () => {
       color: ${state.theme.colors.textOne};
       -webkit-tap-highlight-color: transparent;
     }
+
+    @media (min-width: 1024px) {
+      html,
+      body,
+      #root {
+        height: 100%;
+      }
+    }
   `;
 
   return <Global styles={styles} />;

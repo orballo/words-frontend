@@ -3,6 +3,7 @@ import { connect, useConnect, css } from "frontity";
 import InputText from "./input-text";
 import MessageError from "./message-error";
 import ButtonSubmit from "./button-submit";
+import MessageMethod from "./message-method";
 import { Packages } from "../../../types";
 
 const SignUp: React.FC = () => {
@@ -22,6 +23,10 @@ const SignUp: React.FC = () => {
     actions.auth.signup();
   };
 
+  const formStyles = css`
+    ${!state.router.isSignup && "display: none;"}
+  `;
+
   const titleStyles = css`
     text-transform: uppercase;
     font-size: 24px;
@@ -31,7 +36,7 @@ const SignUp: React.FC = () => {
   `;
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form css={formStyles} onSubmit={handleSubmit}>
       <h2 css={titleStyles}>Sign up</h2>
       <InputText
         label="Enter your email"
@@ -62,6 +67,7 @@ const SignUp: React.FC = () => {
       <ButtonSubmit
         label={signupForm.isAwaitingCode ? "Sign in" : "Get verification code"}
       />
+      <MessageMethod />
     </form>
   );
 };

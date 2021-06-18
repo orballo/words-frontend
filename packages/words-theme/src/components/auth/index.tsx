@@ -13,46 +13,22 @@ const Auth: React.FC = () => {
     color: ${state.theme.colors.textTwo};
     background-color: ${state.theme.colors.bgTwo};
     width: calc(100% - 32px);
-    padding: 52px;
-    padding-top: 40px;
+    padding: 40px 52px;
+    padding-bottom: 44px;
     box-sizing: border-box;
     max-width: 375px;
     ${!state.router.isAuth && "display: none;"}
-  `;
 
-  const paragraphStyles = css`
-    margin-top: 40px;
-    font-size: 14px;
-    margin-bottom: 0;
-    text-align: right;
-  `;
-
-  const linkStyles = css`
-    color: ${state.theme.colors.textTwo};
+    @media (min-width: 1024px) {
+      display: block;
+      margin: 0;
+    }
   `;
 
   return (
     <div css={container}>
-      {state.router.isSignin && <SignIn />}
-      {state.router.isSignup && <SignUp />}
-      {state.router.isSignin && (
-        <p css={paragraphStyles}>
-          Not yet registered?{" "}
-          <Link css={linkStyles} link="/signup">
-            Sign up
-          </Link>
-          .
-        </p>
-      )}
-      {state.router.isSignup && (
-        <p css={paragraphStyles}>
-          Already registered?{" "}
-          <Link css={linkStyles} link="/signin">
-            Sign in
-          </Link>
-          .
-        </p>
-      )}
+      <SignIn />
+      <SignUp />
     </div>
   );
 };
