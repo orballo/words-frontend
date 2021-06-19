@@ -1,7 +1,7 @@
 import { keyframes, css, connect, useConnect } from "frontity";
 import { Packages } from "../../types";
 
-const Loading = () => {
+const Loading: React.FC<{ className?: string }> = ({ className }) => {
   const { state } = useConnect<Packages>();
 
   const container = css`
@@ -32,7 +32,7 @@ const Loading = () => {
   `;
 
   return (
-    <div css={container}>
+    <div css={container} className={className}>
       <div>
         <div css={bar(1)} />
         <div css={bar(2)} />

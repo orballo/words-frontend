@@ -4,6 +4,7 @@ import InputText from "./input-text";
 import MessageError from "./message-error";
 import ButtonSubmit from "./button-submit";
 import MessageMethod from "./message-method";
+import Loading from "../loading";
 import { Packages } from "../../../types";
 
 const SignUp: React.FC = () => {
@@ -35,6 +36,15 @@ const SignUp: React.FC = () => {
     height: 36px;
   `;
 
+  const loadingStyles = css`
+    height: 44px;
+    margin-top: 28px;
+
+    & > div > div {
+      background-color: ${state.theme.colors.bgOne};
+    }
+  `;
+
   return (
     <form css={formStyles} onSubmit={handleSubmit}>
       <h2 css={titleStyles}>Sign up</h2>
@@ -44,7 +54,7 @@ const SignUp: React.FC = () => {
         value={signupForm.email}
         onChange={handleChange}
         placeholder="Email"
-        disabled={signupForm.isAwaitingCode}
+        disabled={signupForm.isSubmitting}
       />
       <InputText
         label="Enter your username"
@@ -52,7 +62,7 @@ const SignUp: React.FC = () => {
         value={signupForm.username}
         onChange={handleChange}
         placeholder="Username"
-        disabled={signupForm.isAwaitingCode}
+        disabled={signupForm.isSubmitting}
       />
       {signupForm.isAwaitingCode && (
         <InputText
@@ -61,12 +71,19 @@ const SignUp: React.FC = () => {
           value={signupForm.code}
           onChange={handleChange}
           placeholder="Verification code"
+          disabled={signupForm.isSubmitting}
         />
       )}
       {signupForm.isError && <MessageError message={signupForm.errorMessage} />}
-      <ButtonSubmit
-        label={signupForm.isAwaitingCode ? "Sign in" : "Get verification code"}
-      />
+      {signupForm.isSubmitting ? (
+        <Loading css={loadingStyles} />
+      ) : (
+        <ButtonSubmit
+          label={
+            signupForm.isAwaitingCode ? "Sign up" : "Get verification code"
+          }
+        />
+      )}
       <MessageMethod />
     </form>
   );

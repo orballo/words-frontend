@@ -17,7 +17,7 @@ const Main: React.FC = () => {
     if ((state.router.isHome || state.router.isAuth) && !!state.auth.user) {
       actions.router.set("/dashboard");
     }
-  }, [state.auth.user]);
+  }, [state.auth.isSynced, state.auth.user]);
 
   return (
     <>
