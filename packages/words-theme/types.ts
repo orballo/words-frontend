@@ -19,6 +19,7 @@ export default interface Theme extends Package {
       isDashboard: Derived<Packages, boolean>;
     };
     auth: {
+      isSynced: boolean;
       backend: string;
       user?: Record<string, any>;
       signinForm: {

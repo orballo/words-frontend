@@ -8,6 +8,8 @@ const Main: React.FC = () => {
   const { state, actions } = useConnect<Packages>();
 
   React.useEffect(() => {
+    if (!state.auth.isSynced) return;
+
     if (!state.router.isHome && !state.router.isAuth && !state.auth.user) {
       actions.router.set("/");
     }

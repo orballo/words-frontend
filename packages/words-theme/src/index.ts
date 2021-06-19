@@ -16,6 +16,7 @@ const theme: Theme = {
       isDashboard: ({ state }) => state.router.link === "/dashboard",
     },
     auth: {
+      isSynced: false,
       backend: "http://words.local:4000",
       signinForm: {
         email: "",
@@ -58,6 +59,8 @@ const theme: Theme = {
         if (response.status === 200) {
           state.auth.user = await response.json();
         }
+
+        state.auth.isSynced = true;
       },
       signin: async ({ state }) => {
         const { signinForm } = state.auth;
@@ -93,7 +96,6 @@ const theme: Theme = {
         } else {
           const body = await result.json();
           state.auth.user = body;
-          console.log("User:", body);
         }
 
         signinForm.isSubmitting = false;
