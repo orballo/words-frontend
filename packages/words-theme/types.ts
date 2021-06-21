@@ -8,6 +8,15 @@ import {
 } from "@frontity/types";
 import VeryTinyRouter from "@orballo/very-tiny-router/types";
 
+export interface Word {}
+export interface Tag {
+  id: number;
+  name: string;
+  author: number;
+  created_at: string;
+  updated_at: string;
+}
+
 export default interface Theme extends Package {
   name: "words-theme";
   state: {
@@ -43,6 +52,11 @@ export default interface Theme extends Package {
         errorMessage: string;
       };
     };
+    source: {
+      tags?: Tag[];
+      words?: Word[];
+      isRequestingTags: boolean;
+    };
     theme: {
       colors: {
         bgOne: string;
@@ -72,6 +86,9 @@ export default interface Theme extends Package {
       signup: AsyncAction<Packages>;
       updateSignupField: Action<Packages, string, string>;
       signout: AsyncAction<Packages>;
+    };
+    source: {
+      getAllTags: AsyncAction<Packages>;
     };
     theme: {
       updateAddWordField: Action<Packages, string, string>;

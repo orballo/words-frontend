@@ -19,11 +19,14 @@ const AddWord: React.FC = () => {
     background-color: ${state.theme.colors.bgTwo};
     color: ${state.theme.colors.textTwo};
     padding: 12px;
+    height: calc(100vh - 52px);
+    box-sizing: border-box;
   `;
 
   const titleStyles = css`
-    // text-transform: uppercase;
+    text-transform: uppercase;
     margin: 0;
+    margin-top: 12px;
     margin-bottom: 24px;
   `;
 

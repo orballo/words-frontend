@@ -39,6 +39,9 @@ const theme: Theme = {
         errorMessage: "",
       },
     },
+    source: {
+      isRequestingTags: false,
+    },
     theme: {
       colors: {
         bgOne: "#293B5F",
@@ -180,6 +183,22 @@ const theme: Theme = {
         });
 
         delete state.auth.user;
+      },
+    },
+    source: {
+      getAllTags: async ({ state }) => {
+        state.source.isRequestingTags = true;
+
+        const endpoint = new URL("/tags", state.auth.backend);
+        const response = await fetch(endpoint.toString(), {
+          method: "GET",
+          credentials: "include",
+        });
+        const body = await response.json();
+
+        state.source.tags = body;
+
+        state.source.isRequestingTags = false;
       },
     },
     theme: {
