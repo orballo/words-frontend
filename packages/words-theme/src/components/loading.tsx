@@ -11,6 +11,10 @@ const Loading: React.FC<{ className?: string }> = ({ className }) => {
     display: flex;
     justify-content: center;
     align-items: center;
+
+    @media (max-width: 1023px) {
+      min-height: 100vh;
+    }
   `;
 
   const scale = keyframes`

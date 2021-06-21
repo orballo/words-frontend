@@ -1,6 +1,6 @@
 import React from "react";
 import { connect, useConnect, css } from "frontity";
-import InputText from "./input-text";
+import InputText from "../forms/input-text";
 import MessageError from "./message-error";
 import ButtonSubmit from "./button-submit";
 import MessageMethod from "./message-method";

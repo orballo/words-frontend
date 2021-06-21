@@ -4,9 +4,10 @@ import { Packages } from "../../../types";
 
 interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   label: string;
+  className?: string;
 }
 
-const InputText: React.FC<Props> = ({ label, ...props }) => {
+const InputText: React.FC<Props> = ({ label, className, ...props }) => {
   const { state } = useConnect<Packages>();
 
   const spanStyles = css`
@@ -38,7 +39,7 @@ const InputText: React.FC<Props> = ({ label, ...props }) => {
   `;
 
   return (
-    <label>
+    <label className={className}>
       <span css={spanStyles}>{label}</span>
       <input type="text" autoCapitalize="off" css={inputStyles} {...props} />
     </label>

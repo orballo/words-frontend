@@ -14,6 +14,9 @@ const theme: Theme = {
       isSignup: ({ state }) => state.router.link === "/signup",
       isAuth: ({ state }) => state.router.isSignin || state.router.isSignup,
       isDashboard: ({ state }) => state.router.link === "/dashboard",
+      isAddWord: ({ state }) => state.router.link === "/add-word",
+      isAddTag: false,
+      isReview: false,
     },
     auth: {
       isSynced: false,
@@ -44,6 +47,16 @@ const theme: Theme = {
         textOne: "#FFFFFF",
         textTwo: "#333333",
         textError: "#CC0000",
+      },
+      addWordForm: {
+        spelling: "",
+        meaning: "",
+        tags: [],
+        isSubmitting: false,
+      },
+      addTagForm: {
+        name: "",
+        isSubmitting: false,
       },
     },
   },
@@ -167,6 +180,13 @@ const theme: Theme = {
         });
 
         delete state.auth.user;
+      },
+    },
+    theme: {
+      updateAddWordField: ({ state }) => (name, value) => {
+        const { addWordForm } = state.theme;
+
+        addWordForm[name] = value;
       },
     },
   },

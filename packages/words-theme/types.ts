@@ -17,6 +17,9 @@ export default interface Theme extends Package {
       isSignup: Derived<Packages, boolean>;
       isAuth: Derived<Packages, boolean>;
       isDashboard: Derived<Packages, boolean>;
+      isAddWord: Derived<Packages, boolean>;
+      isAddTag: boolean;
+      isReview: boolean;
     };
     auth: {
       isSynced: boolean;
@@ -49,6 +52,16 @@ export default interface Theme extends Package {
         textTwo: string;
         textError: string;
       };
+      addWordForm: {
+        spelling: string;
+        meaning: string;
+        tags: string[];
+        isSubmitting: boolean;
+      };
+      addTagForm: {
+        name: string;
+        isSubmitting: boolean;
+      };
     };
   };
   actions: {
@@ -59,6 +72,9 @@ export default interface Theme extends Package {
       signup: AsyncAction<Packages>;
       updateSignupField: Action<Packages, string, string>;
       signout: AsyncAction<Packages>;
+    };
+    theme: {
+      updateAddWordField: Action<Packages, string, string>;
     };
   };
 }
