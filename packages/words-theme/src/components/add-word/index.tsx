@@ -1,6 +1,7 @@
 import React from "react";
 import { connect, useConnect, css } from "frontity";
-import ButtonClose from "./button-close";
+import ButtonClose from "../forms/button-close";
+import Form from "../forms/form";
 import InputText from "../forms/input-text";
 import InputTags from "../forms/input-tags";
 import { Packages } from "../../../types";
@@ -15,21 +16,6 @@ const AddWord: React.FC = () => {
     actions.theme.updateAddWordField(event.target.name, event.target.value);
   };
 
-  const formStyles = css`
-    background-color: ${state.theme.colors.bgTwo};
-    color: ${state.theme.colors.textTwo};
-    padding: 12px;
-    height: calc(100vh - 52px);
-    box-sizing: border-box;
-  `;
-
-  const titleStyles = css`
-    text-transform: uppercase;
-    margin: 0;
-    margin-top: 12px;
-    margin-bottom: 24px;
-  `;
-
   const inputHangulStyles = css`
     input {
       font-size: 19px;
@@ -43,11 +29,10 @@ const AddWord: React.FC = () => {
   return (
     <div>
       <ButtonClose />
-      <form css={formStyles}>
-        <h2 css={titleStyles}>Add a new word</h2>
+      <Form title="Add a new word">
         <InputText
           css={inputHangulStyles}
-          label="Spelling"
+          label="Enter the spelling in Korean"
           name="spelling"
           placeholder="Spelling"
           value={addWordForm.spelling}
@@ -55,7 +40,7 @@ const AddWord: React.FC = () => {
           disabled={addWordForm.isSubmitting}
         />
         <InputText
-          label="Meaning"
+          label="Enter the meaning of the word"
           name="meaning"
           placeholder="Meaning"
           value={addWordForm.meaning}
@@ -63,7 +48,7 @@ const AddWord: React.FC = () => {
           disabled={addWordForm.isSubmitting}
         />
         <InputTags />
-      </form>
+      </Form>
     </div>
   );
 };

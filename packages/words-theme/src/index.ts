@@ -15,7 +15,7 @@ const theme: Theme = {
       isAuth: ({ state }) => state.router.isSignin || state.router.isSignup,
       isDashboard: ({ state }) => state.router.link === "/dashboard",
       isAddWord: ({ state }) => state.router.link === "/add-word",
-      isAddTag: false,
+      isAddTag: ({ state }) => state.router.link === "/add-tag",
       isReview: false,
     },
     auth: {
@@ -40,7 +40,7 @@ const theme: Theme = {
       },
     },
     source: {
-      isRequestingTags: false,
+      isRequestingTags: true,
     },
     theme: {
       colors: {
@@ -200,6 +200,22 @@ const theme: Theme = {
 
         state.source.isRequestingTags = false;
       },
+      addTag: async ({ state }) => {
+        const { addTagForm } = state.theme;
+
+        addTagForm.isSubmitting = true;
+
+        const endpoint = new URL("/tags", state.auth.backend);
+        const payload = { name: addTagForm.name.trim() };
+        const response = await fetch(endpoint.toString(), {
+          method: "POST",
+          credentials: "include",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+
+        addTagForm.isSubmitting = false;
+      },
     },
     theme: {
       updateAddWordField: ({ state }) => (name, value) => {
@@ -213,6 +229,16 @@ const theme: Theme = {
         addWordForm.spelling = "";
         addWordForm.meaning = "";
         addWordForm.tags = [];
+      },
+      updateAddTagField: ({ state }) => (name, value) => {
+        const { addTagForm } = state.theme;
+
+        addTagForm[name] = value;
+      },
+      resetAddTagForm: ({ state }) => {
+        const { addTagForm } = state.theme;
+
+        addTagForm.name = "";
       },
     },
   },

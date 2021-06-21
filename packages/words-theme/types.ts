@@ -27,7 +27,7 @@ export default interface Theme extends Package {
       isAuth: Derived<Packages, boolean>;
       isDashboard: Derived<Packages, boolean>;
       isAddWord: Derived<Packages, boolean>;
-      isAddTag: boolean;
+      isAddTag: Derived<Packages, boolean>;
       isReview: boolean;
     };
     auth: {
@@ -89,10 +89,13 @@ export default interface Theme extends Package {
     };
     source: {
       getAllTags: AsyncAction<Packages>;
+      addTag: AsyncAction<Packages>;
     };
     theme: {
       updateAddWordField: Action<Packages, string, string>;
       resetAddWordForm: Action<Packages>;
+      updateAddTagField: Action<Packages, string, string>;
+      resetAddTagForm: Action<Packages>;
     };
   };
 }
