@@ -188,6 +188,13 @@ const theme: Theme = {
 
         addWordForm[name] = value;
       },
+      resetAddWordForm: ({ state }) => {
+        const { addWordForm } = state.theme;
+
+        addWordForm.spelling = "";
+        addWordForm.meaning = "";
+        addWordForm.tags = [];
+      },
     },
   },
 };

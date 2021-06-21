@@ -9,6 +9,8 @@ const AddWord: React.FC = () => {
   const { state, actions } = useConnect<Packages>();
   const { addWordForm } = state.theme;
 
+  React.useEffect(() => () => actions.theme.resetAddWordForm(), []);
+
   const handleChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
     actions.theme.updateAddWordField(event.target.name, event.target.value);
   };

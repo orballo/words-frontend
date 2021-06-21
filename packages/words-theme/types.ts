@@ -75,6 +75,7 @@ export default interface Theme extends Package {
     };
     theme: {
       updateAddWordField: Action<Packages, string, string>;
+      resetAddWordForm: Action<Packages>;
     };
   };
 }
