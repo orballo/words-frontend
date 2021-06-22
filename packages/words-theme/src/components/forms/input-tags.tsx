@@ -4,10 +4,9 @@ import Select from "react-select";
 import InputText from "./input-text";
 import { Packages, Tag } from "../../../types";
 
-interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
+interface Props {
   label: string;
-  className?: string;
-  onChange: () => void;
+  onChange: (tags: { value: number; label: string }[]) => void;
 }
 
 const InputTags: React.FC<Props> = ({ label, onChange }) => {
@@ -56,7 +55,7 @@ const InputTags: React.FC<Props> = ({ label, onChange }) => {
           }),
           indicatorSeparator: (styles) => ({
             ...styles,
-            backgroundColor: state.theme.colors.textOne,
+            backgroundColor: state.theme.colors.textOne + "55",
             width: "2px",
           }),
           clearIndicator: (styles) => ({
@@ -87,7 +86,7 @@ const InputTags: React.FC<Props> = ({ label, onChange }) => {
         isMulti
         name="tags"
         options={options}
-        placehodler="Tags"
+        placeholder="Tags..."
         onChange={onChange}
       />
     </label>
