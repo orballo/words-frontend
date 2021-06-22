@@ -21,6 +21,7 @@
     "@frontity/core": "^1.14.2",
     "@orballo/very-tiny-router": "^0.1.2",
     "frontity": "^1.16.0",
+    "path-to-regexp": "^6.2.0",
     "words-theme": "./packages/words-theme"
   },
   "devDependencies": {

@@ -20,9 +20,13 @@ const Dashboard: React.FC = () => {
     margin-bottom: 52px;
     padding: 16px 12px;
     box-sizing: border-box;
-    background-color: ${state.theme.colors.bgTwo};
     background: none;
-    color: ${state.theme.colors.textTwo};
+  `;
+
+  const loadingStyles = css`
+    @media (max-width: 1023px) {
+      min-height: calc(100vh - 52px - 52px - 16px);
+    }
   `;
 
   return !state.auth.isSynced ? (
@@ -31,7 +35,7 @@ const Dashboard: React.FC = () => {
     <>
       <div css={containerStyles}>
         {state.source.isRequestingTags ? (
-          <Loading />
+          <Loading css={loadingStyles} />
         ) : (
           <div>
             {state.source.tags.map((tag) => (

@@ -14,6 +14,7 @@ const theme: Theme = {
       isSignup: ({ state }) => state.router.link === "/signup",
       isAuth: ({ state }) => state.router.isSignin || state.router.isSignup,
       isDashboard: ({ state }) => state.router.link === "/dashboard",
+      isSearch: ({ state }) => state.router.link.startsWith("/search"),
       isAddWord: ({ state }) => state.router.link === "/add-word",
       isAddTag: ({ state }) => state.router.link === "/add-tag",
       isReview: false,
@@ -40,6 +41,9 @@ const theme: Theme = {
       },
     },
     source: {
+      tags: [],
+      words: [],
+      isRequestingWords: true,
       isRequestingTags: true,
     },
     theme: {
@@ -60,6 +64,16 @@ const theme: Theme = {
       addTagForm: {
         name: "",
         isSubmitting: false,
+      },
+      searchForm: {
+        search: "",
+        filteredWords: ({ state }) => {
+          const regexp = new RegExp(state.theme.searchForm.search, "i");
+          const words = state.source.words.filter(
+            (word) => word.spelling.match(regexp) || word.meaning.match(regexp)
+          );
+          return words;
+        },
       },
     },
   },
@@ -216,6 +230,20 @@ const theme: Theme = {
 
         addTagForm.isSubmitting = false;
       },
+      getAllWords: async ({ state }) => {
+        state.source.isRequestingWords = true;
+
+        const endpoint = new URL("/words", state.auth.backend);
+        const response = await fetch(endpoint.toString(), {
+          method: "GET",
+          credentials: "include",
+        });
+        const body = await response.json();
+
+        state.source.words = body;
+
+        state.source.isRequestingWords = false;
+      },
     },
     theme: {
       updateAddWordField: ({ state }) => (name, value) => {
@@ -239,6 +267,16 @@ const theme: Theme = {
         const { addTagForm } = state.theme;
 
         addTagForm.name = "";
+      },
+      updateSearchField: ({ state }) => (name, value) => {
+        const { searchForm } = state.theme;
+
+        searchForm[name] = value;
+      },
+      resetSearchForm: ({ state }) => {
+        const { searchForm } = state.theme;
+
+        searchForm.search = "";
       },
     },
   },

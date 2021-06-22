@@ -10,6 +10,10 @@ import { Packages } from "../../../types";
 const Footer: React.FC = () => {
   const { state, actions } = useConnect<Packages>();
 
+  const handleSearch: React.MouseEventHandler<HTMLButtonElement> = () => {
+    actions.router.set("/search");
+  };
+
   const handleAddWord: React.MouseEventHandler<HTMLButtonElement> = () => {
     actions.router.set("/add-word");
   };
@@ -31,7 +35,7 @@ const Footer: React.FC = () => {
 
   return (
     <footer css={footerStyles}>
-      <ButtonFooter Icon={IconSearch} />
+      <ButtonFooter Icon={IconSearch} onClick={handleSearch} />
       <ButtonFooter Icon={IconWord} onClick={handleAddWord} />
       <ButtonFooter Icon={IconTag} onClick={handleAddTag} />
       <ButtonFooter Icon={IconReview} />

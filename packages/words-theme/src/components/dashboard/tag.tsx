@@ -3,9 +3,9 @@ import { connect, useConnect, css } from "frontity";
 import IconSearch from "../icons/icon-search";
 import IconWord from "../icons/icon-word";
 import IconReview from "../icons/icon-review";
-import { Packages, Tag } from "../../../types";
+import { Packages, Tag as ITag } from "../../../types";
 
-const TagMenu: React.FC<{ tag: Tag }> = ({ tag }) => {
+const Tag: React.FC<{ tag: ITag }> = ({ tag }) => {
   const { state } = useConnect<Packages>();
 
   const containerStyles = css`
@@ -65,4 +65,4 @@ const TagMenu: React.FC<{ tag: Tag }> = ({ tag }) => {
   );
 };
 
-export default connect(TagMenu);
+export default connect(Tag);

@@ -8,7 +8,16 @@ import {
 } from "@frontity/types";
 import VeryTinyRouter from "@orballo/very-tiny-router/types";
 
-export interface Word {}
+export interface Word {
+  id: number;
+  author: number;
+  created_at: string;
+  updated_at: string;
+  spelling: string;
+  meaning: string;
+  level: number;
+  reviewed_at: string;
+}
 export interface Tag {
   id: number;
   name: string;
@@ -26,6 +35,7 @@ export default interface Theme extends Package {
       isSignup: Derived<Packages, boolean>;
       isAuth: Derived<Packages, boolean>;
       isDashboard: Derived<Packages, boolean>;
+      isSearch: Derived<Packages, boolean>;
       isAddWord: Derived<Packages, boolean>;
       isAddTag: Derived<Packages, boolean>;
       isReview: boolean;
@@ -53,8 +63,9 @@ export default interface Theme extends Package {
       };
     };
     source: {
-      tags?: Tag[];
       words?: Word[];
+      tags?: Tag[];
+      isRequestingWords: boolean;
       isRequestingTags: boolean;
     };
     theme: {
@@ -76,6 +87,10 @@ export default interface Theme extends Package {
         name: string;
         isSubmitting: boolean;
       };
+      searchForm: {
+        search: string;
+        filteredWords: Derived<Packages, Word[]>;
+      };
     };
   };
   actions: {
@@ -90,12 +105,15 @@ export default interface Theme extends Package {
     source: {
       getAllTags: AsyncAction<Packages>;
       addTag: AsyncAction<Packages>;
+      getAllWords: AsyncAction<Packages>;
     };
     theme: {
       updateAddWordField: Action<Packages, string, string>;
       resetAddWordForm: Action<Packages>;
       updateAddTagField: Action<Packages, string, string>;
       resetAddTagForm: Action<Packages>;
+      updateSearchField: Action<Packages, string, string>;
+      resetSearchForm: Action<Packages>;
     };
   };
 }
