@@ -60,14 +60,6 @@ const theme: Theme = {
         spelling: "",
         meaning: "",
         tags: [],
-        tagName: "",
-        tagGuess: ({ state }) => {
-          const regexp = new RegExp(state.theme.addWordForm.tagName, "i");
-          const tags = state.source.tags.filter((tag) => {
-            return tag.name.match(regexp);
-          });
-          return tags || [];
-        },
         isSubmitting: false,
       },
       addTagForm: {
@@ -363,7 +355,7 @@ const theme: Theme = {
         editWordForm.id = word.id;
         editWordForm.spelling = word.spelling;
         editWordForm.meaning = word.meaning;
-        // editWordForm.tags = word.tags;
+        editWordForm.tags = word.tags || [];
       },
       updateEditWordField: ({ state }) => (name, value) => {
         const { editWordForm } = state.theme;

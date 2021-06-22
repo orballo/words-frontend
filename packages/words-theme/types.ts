@@ -15,6 +15,7 @@ export interface Word {
   updated_at: string;
   spelling: string;
   meaning: string;
+  tags: number[];
   level: number;
   reviewed_at: string;
 }
@@ -82,8 +83,6 @@ export default interface Theme extends Package {
         spelling: string;
         meaning: string;
         tags: number[];
-        tagName: string;
-        tagGuess: Derived<Packages, Tag[]>;
         isSubmitting: boolean;
       };
       addTagForm: {
@@ -129,7 +128,7 @@ export default interface Theme extends Package {
       updateSearchField: Action<Packages, string, string>;
       resetSearchForm: Action<Packages>;
       initEditWordForm: Action<Packages, number>;
-      updateEditWordField: Action<Packages, string, string>;
+      updateEditWordField: Action<Packages, string, string | number[]>;
       resetEditWordForm: Action<Packages>;
     };
   };

@@ -25,6 +25,13 @@ const EditWord: React.FC = () => {
     actions.theme.updateEditWordField(event.target.name, event.target.value);
   };
 
+  const handleTagsChange = (tags: { value: number; label: string }[]) => {
+    actions.theme.updateEditWordField(
+      "tags",
+      tags.map((tag) => tag.value)
+    );
+  };
+
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (
     event
   ) => {
@@ -69,7 +76,14 @@ const EditWord: React.FC = () => {
           onChange={handleChange}
           disabled={editWordForm.isSubmitting}
         />
-        <InputTags />
+        <InputTags
+          label="Add tags to this word (optional)"
+          value={editWordForm.tags.map((tag) => ({
+            value: tag,
+            label: state.source.tags.find((t) => t.id === tag).name,
+          }))}
+          onChange={handleTagsChange}
+        />
         <div>
           <ButtonSubmit label="Save changes" />
           <ButtonDelete label="Remove word" onClick={handleDelete} />

@@ -65,6 +65,10 @@ const AddWord: React.FC = () => {
         />
         <InputTags
           label="Add tags to this word (optional)"
+          value={addWordForm.tags.map((tag) => ({
+            value: tag,
+            label: state.source.tags.find((t) => t.id === tag).name,
+          }))}
           onChange={handleTagsChange}
         />
         <ButtonSubmit label="Save word" />

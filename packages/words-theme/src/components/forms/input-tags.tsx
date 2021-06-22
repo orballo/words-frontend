@@ -6,10 +6,11 @@ import { Packages, Tag } from "../../../types";
 
 interface Props {
   label: string;
+  value: { value: number }[];
   onChange: (tags: { value: number; label: string }[]) => void;
 }
 
-const InputTags: React.FC<Props> = ({ label, onChange }) => {
+const InputTags: React.FC<Props> = ({ label, value, onChange }) => {
   const { state } = useConnect<Packages>();
 
   const options = state.source.tags.map((tag) => ({
@@ -31,7 +32,6 @@ const InputTags: React.FC<Props> = ({ label, onChange }) => {
     <label css={labelStyles}>
       <span css={spanStyles}>{label}</span>
       <Select
-        // theme={{ spacing: { baseUnit: 1, controlHeight: 44, menuGutter: 0 } }}
         styles={{
           control: (styles) => ({
             ...styles,
@@ -84,6 +84,7 @@ const InputTags: React.FC<Props> = ({ label, onChange }) => {
           }),
         }}
         isMulti
+        value={value}
         name="tags"
         options={options}
         placeholder="Tags..."
