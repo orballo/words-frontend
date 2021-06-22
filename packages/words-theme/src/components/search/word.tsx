@@ -12,7 +12,8 @@ const Word: React.FC<{ word: IWord }> = ({ word }) => {
   };
 
   const containerStyles = css`
-    display: flex;
+    display: grid;
+    grid-template-columns: 0.7fr 1fr 24px;
     align-items: center;
     justify-content: space-between;
     background-color: ${state.theme.colors.bgTwo};
@@ -29,7 +30,8 @@ const Word: React.FC<{ word: IWord }> = ({ word }) => {
 
   return (
     <div css={containerStyles}>
-      {word.spelling} {word.meaning}
+      <span>{word.spelling}</span>
+      <span>{word.meaning}</span>
       <ButtonEdit onClick={handleClick} />
     </div>
   );

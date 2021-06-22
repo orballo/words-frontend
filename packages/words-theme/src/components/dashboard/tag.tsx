@@ -52,9 +52,6 @@ const Tag: React.FC<{ tag: ITag }> = ({ tag }) => {
       <div>{tag.name}</div>
       <div css={buttonsWrapper}>
         <button css={buttonStyles}>
-          <IconSearch css={iconStyles} />
-        </button>
-        <button css={buttonStyles}>
           <IconWord css={iconStyles} />
         </button>
         <button css={buttonStyles}>
