@@ -3,11 +3,16 @@ import { connect, useConnect, css } from "frontity";
 import IconClose from "../icons/icon-close";
 import { Packages } from "../../../types";
 
-const ButtonClose: React.FC = () => {
+const ButtonClose: React.FC<{
+  onClick?: (event: React.MouseEvent) => void;
+}> = ({ onClick }) => {
   const { state, actions } = useConnect<Packages>();
 
-  const handleClick: React.MouseEventHandler<HTMLButtonElement> = () => {
-    actions.router.set("/dashboard");
+  const handleClick: React.MouseEventHandler<HTMLButtonElement> = (event) => {
+    if (onClick) onClick(event);
+    else {
+      actions.router.set("/dashboard");
+    }
   };
 
   const buttonStyles = css`

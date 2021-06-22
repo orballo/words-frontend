@@ -17,6 +17,7 @@ const theme: Theme = {
       isSearch: ({ state }) => state.router.link.startsWith("/search"),
       isAddWord: ({ state }) => state.router.link === "/add-word",
       isAddTag: ({ state }) => state.router.link === "/add-tag",
+      isEditWord: ({ state }) => state.router.link === "/edit-word",
       isReview: false,
     },
     auth: {
@@ -74,6 +75,12 @@ const theme: Theme = {
           );
           return words;
         },
+      },
+      editWordForm: {
+        spelling: "",
+        meaning: "",
+        tags: [],
+        isSubmitting: false,
       },
     },
   },
@@ -230,6 +237,7 @@ const theme: Theme = {
 
         addTagForm.isSubmitting = false;
       },
+      editTag: async ({ state }) => {},
       getAllWords: async ({ state }) => {
         state.source.isRequestingWords = true;
 
@@ -243,6 +251,65 @@ const theme: Theme = {
         state.source.words = body;
 
         state.source.isRequestingWords = false;
+      },
+      addWord: async ({ state }) => {
+        const { addWordForm } = state.theme;
+
+        addWordForm.isSubmitting = true;
+
+        const endpoint = new URL("/words", state.auth.backend);
+        const payload = {
+          spelling: addWordForm.spelling.trim(),
+          meaning: addWordForm.meaning.trim(),
+          tags: addWordForm.tags,
+        };
+        const response = await fetch(endpoint.toString(), {
+          method: "POST",
+          credentials: "include",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+
+        addWordForm.isSubmitting = false;
+      },
+      editWord: async ({ state }) => {
+        const { editWordForm } = state.theme;
+
+        editWordForm.isSubmitting = true;
+
+        const endpoint = new URL("/words/edit", state.auth.backend);
+        const payload = {
+          id: editWordForm.id,
+          spelling: editWordForm.spelling.trim(),
+          meaning: editWordForm.meaning.trim(),
+          tags: editWordForm.tags,
+        };
+        const response = await fetch(endpoint.toString(), {
+          method: "PATCH",
+          credentials: "include",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+
+        editWordForm.isSubmitting = false;
+      },
+      deleteWord: async ({ state }) => {
+        const { editWordForm } = state.theme;
+
+        editWordForm.isSubmitting = true;
+
+        const endpoint = new URL("/words", state.auth.backend);
+        const payload = {
+          id: editWordForm.id,
+        };
+        const response = await fetch(endpoint.toString(), {
+          method: "DELETE",
+          credentials: "include",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+
+        editWordForm.isSubmitting = false;
       },
     },
     theme: {
@@ -277,6 +344,31 @@ const theme: Theme = {
         const { searchForm } = state.theme;
 
         searchForm.search = "";
+      },
+      initEditWordForm: ({ state }) => (id) => {
+        const word = state.source.words.find((word) => word.id === id);
+
+        if (!word) return;
+
+        const { editWordForm } = state.theme;
+
+        editWordForm.id = word.id;
+        editWordForm.spelling = word.spelling;
+        editWordForm.meaning = word.meaning;
+        // editWordForm.tags = word.tags;
+      },
+      updateEditWordField: ({ state }) => (name, value) => {
+        const { editWordForm } = state.theme;
+
+        editWordForm[name] = value;
+      },
+      resetEditWordForm: ({ state }) => {
+        const { editWordForm } = state.theme;
+
+        delete editWordForm.id;
+        editWordForm.spelling = "";
+        editWordForm.meaning = "";
+        editWordForm.tags = [];
       },
     },
   },

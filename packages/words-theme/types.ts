@@ -38,6 +38,7 @@ export default interface Theme extends Package {
       isSearch: Derived<Packages, boolean>;
       isAddWord: Derived<Packages, boolean>;
       isAddTag: Derived<Packages, boolean>;
+      isEditWord: Derived<Packages, boolean>;
       isReview: boolean;
     };
     auth: {
@@ -80,7 +81,7 @@ export default interface Theme extends Package {
       addWordForm: {
         spelling: string;
         meaning: string;
-        tags: string[];
+        tags: number[];
         isSubmitting: boolean;
       };
       addTagForm: {
@@ -90,6 +91,13 @@ export default interface Theme extends Package {
       searchForm: {
         search: string;
         filteredWords: Derived<Packages, Word[]>;
+      };
+      editWordForm: {
+        id?: number;
+        spelling: string;
+        meaning: string;
+        tags: number[];
+        isSubmitting: boolean;
       };
     };
   };
@@ -105,7 +113,11 @@ export default interface Theme extends Package {
     source: {
       getAllTags: AsyncAction<Packages>;
       addTag: AsyncAction<Packages>;
+      editTag: AsyncAction<Packages>;
       getAllWords: AsyncAction<Packages>;
+      addWord: AsyncAction<Packages>;
+      editWord: AsyncAction<Packages>;
+      deleteWord: AsyncAction<Packages>;
     };
     theme: {
       updateAddWordField: Action<Packages, string, string>;
@@ -114,6 +126,9 @@ export default interface Theme extends Package {
       resetAddTagForm: Action<Packages>;
       updateSearchField: Action<Packages, string, string>;
       resetSearchForm: Action<Packages>;
+      initEditWordForm: Action<Packages, number>;
+      updateEditWordField: Action<Packages, string, string>;
+      resetEditWordForm: Action<Packages>;
     };
   };
 }

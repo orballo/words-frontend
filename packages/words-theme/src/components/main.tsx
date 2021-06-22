@@ -1,10 +1,11 @@
 import React from "react";
-import { connect, useConnect } from "frontity";
+import { connect, useConnect, css } from "frontity";
 import Home from "./home";
 import Dashboard from "./dashboard";
 import Search from "./search";
 import AddWord from "./add-word";
 import AddTag from "./add-tag";
+import EditWord from "./edit-word";
 import { Packages } from "../../types";
 
 const Main: React.FC = () => {
@@ -22,14 +23,21 @@ const Main: React.FC = () => {
     }
   }, [state.auth.isSynced, state.auth.user]);
 
+  const mainStyles = css`
+    max-width: 1024px;
+    min-height: 100%;
+    margin: auto;
+  `;
+
   return (
-    <>
+    <main css={mainStyles}>
       {state.router.isHome && <Home />}
       {state.router.isDashboard && <Dashboard />}
       {state.router.isSearch && <Search />}
       {state.router.isAddWord && <AddWord />}
       {state.router.isAddTag && <AddTag />}
-    </>
+      {state.router.isEditWord && <EditWord />}
+    </main>
   );
 };
 

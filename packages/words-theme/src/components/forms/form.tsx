@@ -13,7 +13,7 @@ const Form: React.FC<Props> = ({ title, children, ...props }) => {
     background-color: ${state.theme.colors.bgTwo};
     color: ${state.theme.colors.textTwo};
     padding: 16px;
-    height: calc(100vh - 52px);
+    min-height: calc(100vh - 52px);
     box-sizing: border-box;
   `;
 

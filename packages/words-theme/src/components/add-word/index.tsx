@@ -4,6 +4,7 @@ import ButtonClose from "../forms/button-close";
 import Form from "../forms/form";
 import InputText from "../forms/input-text";
 import InputTags from "../forms/input-tags";
+import ButtonSubmit from "../forms/button-submit";
 import { Packages } from "../../../types";
 
 const AddWord: React.FC = () => {
@@ -11,6 +12,14 @@ const AddWord: React.FC = () => {
   const { addWordForm } = state.theme;
 
   React.useEffect(() => () => actions.theme.resetAddWordForm(), []);
+
+  const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (
+    event
+  ) => {
+    event.preventDefault();
+    await actions.source.addWord();
+    actions.router.set("/dashboard");
+  };
 
   const handleChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
     actions.theme.updateAddWordField(event.target.name, event.target.value);
@@ -29,7 +38,7 @@ const AddWord: React.FC = () => {
   return (
     <div>
       <ButtonClose />
-      <Form title="Add a new word">
+      <Form title="Add a new word" onSubmit={handleSubmit}>
         <InputText
           css={inputHangulStyles}
           label="Enter the spelling in Korean"
@@ -48,6 +57,7 @@ const AddWord: React.FC = () => {
           disabled={addWordForm.isSubmitting}
         />
         <InputTags />
+        <ButtonSubmit label="Save word" />
       </Form>
     </div>
   );
