@@ -1,8 +1,97 @@
 import React from "react";
-import { connect } from "frontity";
+import { connect, useConnect, css } from "frontity";
+import Select from "react-select";
+import InputText from "./input-text";
+import { Packages, Tag } from "../../../types";
 
-const InputTags: React.FC = () => {
-  return <div></div>;
+interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
+  label: string;
+  className?: string;
+  onChange: () => void;
+}
+
+const InputTags: React.FC<Props> = ({ label, onChange }) => {
+  const { state } = useConnect<Packages>();
+
+  const options = state.source.tags.map((tag) => ({
+    value: tag.id,
+    label: tag.name,
+  }));
+
+  const labelStyles = css`
+    display: block;
+  `;
+
+  const spanStyles = css`
+    display: block;
+    margin-bottom: 8px;
+    font-size: 16px;
+  `;
+
+  return (
+    <label css={labelStyles}>
+      <span css={spanStyles}>{label}</span>
+      <Select
+        // theme={{ spacing: { baseUnit: 1, controlHeight: 44, menuGutter: 0 } }}
+        styles={{
+          control: (styles) => ({
+            ...styles,
+            minHeight: "44px",
+            border: "none",
+            borderRadius: 0,
+            paddingLeft: "12px",
+            outline: "none",
+            boxShadow: "none",
+            paddingTop: "4px",
+            paddingBottom: "4px",
+            backgroundColor: state.theme.colors.bgOne,
+          }),
+          input: (styles) => ({
+            ...styles,
+            color: state.theme.colors.textOne,
+          }),
+          placeholder: (styles) => ({
+            ...styles,
+            color: state.theme.colors.textOne + "55",
+          }),
+          indicatorSeparator: (styles) => ({
+            ...styles,
+            backgroundColor: state.theme.colors.textOne,
+            width: "2px",
+          }),
+          clearIndicator: (styles) => ({
+            ...styles,
+            color: state.theme.colors.textOne,
+          }),
+          dropdownIndicator: (styles) => ({
+            ...styles,
+            color: state.theme.colors.textOne,
+          }),
+          multiValue: (styles) => ({
+            ...styles,
+            margin: "2px",
+            borderRadius: "none",
+            border: `2px solid ${state.theme.colors.textOne}`,
+            color: state.theme.colors.textOne,
+            backgroundColor: state.theme.colors.bgOne,
+          }),
+          multiValueLabel: (styles) => ({
+            ...styles,
+            color: state.theme.colors.textOne,
+          }),
+          valueContainer: (styles) => ({
+            ...styles,
+            padding: 0,
+          }),
+        }}
+        isMulti
+        name="tags"
+        options={options}
+        placehodler="Tags"
+        onChange={onChange}
+      />
+    </label>
+  );
 };
 
-export default connect(InputTags);
+export default connect(InputTags, { injectProps: false });

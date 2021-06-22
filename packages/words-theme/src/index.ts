@@ -60,6 +60,14 @@ const theme: Theme = {
         spelling: "",
         meaning: "",
         tags: [],
+        tagName: "",
+        tagGuess: ({ state }) => {
+          const regexp = new RegExp(state.theme.addWordForm.tagName, "i");
+          const tags = state.source.tags.filter((tag) => {
+            return tag.name.match(regexp);
+          });
+          return tags || [];
+        },
         isSubmitting: false,
       },
       addTagForm: {

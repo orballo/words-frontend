@@ -22,10 +22,12 @@
     "@orballo/very-tiny-router": "^0.1.2",
     "frontity": "^1.16.0",
     "path-to-regexp": "^6.2.0",
+    "react-select": "^4.3.1",
     "words-theme": "./packages/words-theme"
   },
   "devDependencies": {
+    "@types/node-fetch": "^2.5.10",
     "@types/react": "^17.0.11",
-    "@types/node-fetch": "^2.5.10"
+    "@types/react-select": "^4.0.15"
   }
 }

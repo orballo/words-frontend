@@ -25,6 +25,13 @@ const AddWord: React.FC = () => {
     actions.theme.updateAddWordField(event.target.name, event.target.value);
   };
 
+  const handleTagsChange = (tags: { value: number; label: string }[]) => {
+    actions.theme.updateAddWordField(
+      "tags",
+      tags.map((tag) => tag.value)
+    );
+  };
+
   const inputHangulStyles = css`
     input {
       font-size: 19px;
@@ -56,7 +63,10 @@ const AddWord: React.FC = () => {
           onChange={handleChange}
           disabled={addWordForm.isSubmitting}
         />
-        <InputTags />
+        <InputTags
+          label="Add tags to this word (optional)"
+          onChange={handleTagsChange}
+        />
         <ButtonSubmit label="Save word" />
       </Form>
     </div>

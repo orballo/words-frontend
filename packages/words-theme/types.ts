@@ -82,6 +82,8 @@ export default interface Theme extends Package {
         spelling: string;
         meaning: string;
         tags: number[];
+        tagName: string;
+        tagGuess: Derived<Packages, Tag[]>;
         isSubmitting: boolean;
       };
       addTagForm: {
@@ -120,7 +122,7 @@ export default interface Theme extends Package {
       deleteWord: AsyncAction<Packages>;
     };
     theme: {
-      updateAddWordField: Action<Packages, string, string>;
+      updateAddWordField: Action<Packages, string, string | number[]>;
       resetAddWordForm: Action<Packages>;
       updateAddTagField: Action<Packages, string, string>;
       resetAddTagForm: Action<Packages>;
