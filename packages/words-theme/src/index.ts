@@ -18,6 +18,7 @@ const theme: Theme = {
       isAddWord: ({ state }) => state.router.link === "/add-word",
       isAddTag: ({ state }) => state.router.link === "/add-tag",
       isEditWord: ({ state }) => state.router.link === "/edit-word",
+      isEditTag: ({ state }) => state.router.link === "/edit-tag",
       isReview: false,
     },
     auth: {
@@ -92,6 +93,10 @@ const theme: Theme = {
         spelling: "",
         meaning: "",
         tags: [],
+        isSubmitting: false,
+      },
+      editTagForm: {
+        name: "",
         isSubmitting: false,
       },
     },
@@ -257,10 +262,56 @@ const theme: Theme = {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
         });
+        const body = await response.json();
+
+        state.source.tags.unshift(body);
 
         addTagForm.isSubmitting = false;
       },
-      editTag: async ({ state }) => {},
+      editTag: async ({ state }) => {
+        const { editTagForm } = state.theme;
+
+        editTagForm.isSubmitting = true;
+
+        const endpoint = new URL("/tags/edit", state.auth.backend);
+        const payload = {
+          id: editTagForm.id,
+          name: editTagForm.name.trim(),
+        };
+        const response = await fetch(endpoint.toString(), {
+          method: "PATCH",
+          credentials: "include",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+        const body = await response.json();
+        const index = state.source.tags.findIndex((tag) => tag.id === body.id);
+        state.source.tags[index] = body;
+
+        editTagForm.isSubmitting = false;
+      },
+      deleteTag: async ({ state }) => {
+        const { editTagForm } = state.theme;
+
+        editTagForm.isSubmitting = true;
+
+        const endpoint = new URL("/tags", state.auth.backend);
+        const payload = {
+          id: editTagForm.id,
+        };
+        await fetch(endpoint.toString(), {
+          method: "DELETE",
+          credentials: "include",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+        const index = state.source.tags.findIndex(
+          (tag) => tag.id === editTagForm.id
+        );
+        state.source.tags.splice(index, 1);
+
+        editTagForm.isSubmitting = false;
+      },
       getAllWords: async ({ state }) => {
         state.source.isRequestingWords = true;
 
@@ -410,6 +461,27 @@ const theme: Theme = {
         editWordForm.spelling = "";
         editWordForm.meaning = "";
         editWordForm.tags = [];
+      },
+      initEditTagForm: ({ state }) => (id) => {
+        const tag = state.source.tags.find((tag) => tag.id === id);
+
+        if (!tag) return;
+
+        const { editTagForm } = state.theme;
+
+        editTagForm.id = tag.id;
+        editTagForm.name = tag.name;
+      },
+      updateEditTagField: ({ state }) => (name, value) => {
+        const { editTagForm } = state.theme;
+
+        editTagForm[name] = value;
+      },
+      resetEditTagForm: ({ state }) => {
+        const { editTagForm } = state.theme;
+
+        delete editTagForm.id;
+        editTagForm.name = "";
       },
     },
   },

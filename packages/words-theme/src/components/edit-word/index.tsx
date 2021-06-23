@@ -85,7 +85,14 @@ const EditWord: React.FC = () => {
           onChange={handleTagsChange}
         />
         <div>
-          <ButtonSubmit label="Save changes" />
+          <ButtonSubmit
+            label="Save changes"
+            disabled={
+              !editWordForm.spelling ||
+              !editWordForm.meaning ||
+              editWordForm.isSubmitting
+            }
+          />
           <ButtonDelete label="Remove word" onClick={handleDelete} />
         </div>
       </Form>

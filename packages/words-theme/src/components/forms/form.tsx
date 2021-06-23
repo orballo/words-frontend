@@ -15,6 +15,7 @@ const Form: React.FC<Props> = ({ title, children, ...props }) => {
     padding: 16px;
     min-height: calc(100vh - 52px);
     box-sizing: border-box;
+    position: relative;
   `;
 
   const titleStyles = css`

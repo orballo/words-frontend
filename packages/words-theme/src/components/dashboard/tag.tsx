@@ -1,11 +1,17 @@
 import React from "react";
 import { connect, useConnect, css } from "frontity";
+import IconEdit from "../icons/icon-edit";
 import IconWord from "../icons/icon-word";
 import IconReview from "../icons/icon-review";
 import { Packages, Tag as ITag } from "../../../types";
 
 const Tag: React.FC<{ tag: ITag }> = ({ tag }) => {
   const { state, actions } = useConnect<Packages>();
+
+  const handleEditTag: React.MouseEventHandler<HTMLButtonElement> = () => {
+    actions.theme.initEditTagForm(tag.id);
+    actions.router.set(`/edit-tag`);
+  };
 
   const handleTagSearch: React.MouseEventHandler<HTMLButtonElement> = () => {
     actions.router.set(`/search/${tag.id}`);
@@ -73,6 +79,9 @@ const Tag: React.FC<{ tag: ITag }> = ({ tag }) => {
         {tag.name}
       </button>
       <div css={buttonsWrapper}>
+        <button type="button" css={buttonStyles} onClick={handleEditTag}>
+          <IconEdit css={iconStyles} />
+        </button>
         <button type="button" css={buttonStyles} onClick={handleAddWord}>
           <IconWord css={iconStyles} />
         </button>

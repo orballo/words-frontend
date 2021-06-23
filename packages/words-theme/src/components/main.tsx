@@ -6,6 +6,7 @@ import Search from "./search";
 import AddWord from "./add-word";
 import AddTag from "./add-tag";
 import EditWord from "./edit-word";
+import EditTag from "./edit-tag";
 import { Packages } from "../../types";
 
 const Main: React.FC = () => {
@@ -37,6 +38,7 @@ const Main: React.FC = () => {
       {state.router.isAddWord && <AddWord />}
       {state.router.isAddTag && <AddTag />}
       {state.router.isEditWord && <EditWord />}
+      {state.router.isEditTag && <EditTag />}
     </main>
   );
 };

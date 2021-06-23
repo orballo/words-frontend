@@ -3,6 +3,7 @@ import { connect, useConnect, css } from "frontity";
 import Loading from "../loading";
 import ButtonClose from "../forms/button-close";
 import Form from "../forms/form";
+import ButtonEdit from "../forms/button-edit";
 import InputSearch from "../forms/input-search";
 import Word from "./word";
 import { match } from "path-to-regexp";

@@ -40,6 +40,7 @@ export default interface Theme extends Package {
       isAddWord: Derived<Packages, boolean>;
       isAddTag: Derived<Packages, boolean>;
       isEditWord: Derived<Packages, boolean>;
+      isEditTag: Derived<Packages, boolean>;
       isReview: boolean;
     };
     auth: {
@@ -103,6 +104,11 @@ export default interface Theme extends Package {
         tags: number[];
         isSubmitting: boolean;
       };
+      editTagForm: {
+        id?: number;
+        name: string;
+        isSubmitting: boolean;
+      };
     };
   };
   actions: {
@@ -119,6 +125,7 @@ export default interface Theme extends Package {
       getAllTags: AsyncAction<Packages>;
       addTag: AsyncAction<Packages>;
       editTag: AsyncAction<Packages>;
+      deleteTag: AsyncAction<Packages>;
       getAllWords: AsyncAction<Packages>;
       addWord: AsyncAction<Packages>;
       editWord: AsyncAction<Packages>;
@@ -135,6 +142,9 @@ export default interface Theme extends Package {
       initEditWordForm: Action<Packages, number>;
       updateEditWordField: Action<Packages, string, string | number[]>;
       resetEditWordForm: Action<Packages>;
+      initEditTagForm: Action<Packages, number>;
+      updateEditTagField: Action<Packages, string, string>;
+      resetEditTagForm: Action<Packages>;
     };
   };
 }
