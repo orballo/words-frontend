@@ -7,6 +7,10 @@ import { Packages, Tag as ITag } from "../../../types";
 const Tag: React.FC<{ tag: ITag }> = ({ tag }) => {
   const { state, actions } = useConnect<Packages>();
 
+  const handleTagSearch: React.MouseEventHandler<HTMLButtonElement> = () => {
+    actions.router.set(`/search/${tag.id}`);
+  };
+
   const handleAddWord: React.MouseEventHandler<HTMLButtonElement> = () => {
     actions.theme.initAddWordForm(tag.id);
     actions.router.set("/add-word");
@@ -30,6 +34,17 @@ const Tag: React.FC<{ tag: ITag }> = ({ tag }) => {
     }
   `;
 
+  const buttonTagStyles = css`
+    cursor: pointer;
+    background: none;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    height: 100%;
+    flex-grow: 1;
+    text-align: left;
+  `;
+
   const buttonsWrapper = css`
     display: flex;
   `;
@@ -44,6 +59,7 @@ const Tag: React.FC<{ tag: ITag }> = ({ tag }) => {
     justify-content: center;
     align-items: center;
     font-size: 18px;
+    cursor: pointer;
   `;
 
   const iconStyles = css`
@@ -53,7 +69,9 @@ const Tag: React.FC<{ tag: ITag }> = ({ tag }) => {
 
   return (
     <div css={containerStyles}>
-      <div>{tag.name}</div>
+      <button type="button" css={buttonTagStyles} onClick={handleTagSearch}>
+        {tag.name}
+      </button>
       <div css={buttonsWrapper}>
         <button type="button" css={buttonStyles} onClick={handleAddWord}>
           <IconWord css={iconStyles} />

@@ -92,6 +92,8 @@ export default interface Theme extends Package {
       };
       searchForm: {
         search: string;
+        tag?: number;
+        baseWords: Derived<Packages, Word[]>;
         filteredWords: Derived<Packages, Word[]>;
       };
       editWordForm: {

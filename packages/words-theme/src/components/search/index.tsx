@@ -13,10 +13,21 @@ const parse = match("/search/:tag");
 const Search: React.FC = () => {
   const { state, actions } = useConnect<Packages>();
   const { searchForm } = state.theme;
+  const [title, setTitle] = React.useState("All the words");
 
   React.useEffect(() => {
+    if (!state.source.isSynced) return;
+
+    const result = parse(state.router.link) as any;
+    if (result.params) {
+      const { tag } = result.params;
+      const tagName = state.source.tags.find((t) => t.id === parseInt(tag))
+        .name;
+      setTitle(tagName);
+      searchForm.tag = parseInt(tag);
+    }
     return () => actions.theme.resetSearchForm();
-  }, []);
+  }, [state.source.isSynced]);
 
   const handleChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
     actions.theme.updateSearchField(event.target.name, event.target.value);
@@ -49,10 +60,7 @@ const Search: React.FC = () => {
         {state.source.isRequestingWords ? (
           <Loading css={loadingStyles} />
         ) : (
-          <Form
-            title="All the words"
-            onSubmit={(event) => event.preventDefault()}
-          >
+          <Form title={title} onSubmit={(event) => event.preventDefault()}>
             <InputSearch
               name="search"
               value={searchForm.search}

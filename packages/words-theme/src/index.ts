@@ -69,9 +69,20 @@ const theme: Theme = {
       },
       searchForm: {
         search: "",
+        baseWords: ({ state }) => {
+          if (!state.theme.searchForm.tag) return state.source.words;
+
+          const words = state.source.words.filter((word) =>
+            word.tags.includes(state.theme.searchForm.tag)
+          );
+
+          return words;
+        },
         filteredWords: ({ state }) => {
+          const { searchForm } = state.theme;
+
           const regexp = new RegExp(state.theme.searchForm.search, "i");
-          const words = state.source.words.filter(
+          const words = searchForm.baseWords.filter(
             (word) => word.spelling.match(regexp) || word.meaning.match(regexp)
           );
           return words;
@@ -373,6 +384,7 @@ const theme: Theme = {
         const { searchForm } = state.theme;
 
         searchForm.search = "";
+        delete searchForm.tag;
       },
       initEditWordForm: ({ state }) => (id) => {
         const word = state.source.words.find((word) => word.id === id);
