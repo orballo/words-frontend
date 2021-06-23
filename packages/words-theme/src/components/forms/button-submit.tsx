@@ -22,10 +22,9 @@ const ButtonSubmit: React.FC<Props> = ({ label, ...props }) => {
     background-color: ${state.theme.colors.bgTwo};
     cursor: pointer;
 
-    &:hover {
-      color: ${state.theme.colors.bgTwo};
-      background-color: ${state.theme.colors.bgThree};
-      transition: background-color 150ms ease, color 150ms ease;
+    &:disabled {
+      color: ${state.theme.colors.textTwo}77;
+      border: 2px solid ${state.theme.colors.textTwo}77;
     }
   `;
 

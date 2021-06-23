@@ -38,7 +38,7 @@ const InputTags: React.FC<Props> = ({ label, value, onChange }) => {
             minHeight: "44px",
             border: "none",
             borderRadius: 0,
-            paddingLeft: "12px",
+            paddingLeft: "4px",
             outline: "none",
             boxShadow: "none",
             paddingTop: "4px",

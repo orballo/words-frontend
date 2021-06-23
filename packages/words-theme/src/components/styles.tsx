@@ -21,6 +21,10 @@ const Styles: React.FC = () => {
 
     a {
       color: ${state.theme.colors.textOne};
+    }
+
+    a,
+    button {
       -webkit-tap-highlight-color: transparent;
     }
 

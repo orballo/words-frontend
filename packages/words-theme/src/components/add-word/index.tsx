@@ -71,7 +71,14 @@ const AddWord: React.FC = () => {
           }))}
           onChange={handleTagsChange}
         />
-        <ButtonSubmit label="Save word" />
+        <ButtonSubmit
+          label="Save word"
+          disabled={
+            !addWordForm.spelling ||
+            !addWordForm.meaning ||
+            addWordForm.isSubmitting
+          }
+        />
       </Form>
     </div>
   );

@@ -338,6 +338,10 @@ const theme: Theme = {
       },
     },
     theme: {
+      initAddWordForm: ({ state }) => (tag) => {
+        const { addWordForm } = state.theme;
+        addWordForm.tags.push(tag);
+      },
       updateAddWordField: ({ state }) => (name, value) => {
         const { addWordForm } = state.theme;
 

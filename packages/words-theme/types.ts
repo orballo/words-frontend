@@ -123,6 +123,7 @@ export default interface Theme extends Package {
       deleteWord: AsyncAction<Packages>;
     };
     theme: {
+      initAddWordForm: Action<Packages, number>;
       updateAddWordField: Action<Packages, string, string | number[]>;
       resetAddWordForm: Action<Packages>;
       updateAddTagField: Action<Packages, string, string>;

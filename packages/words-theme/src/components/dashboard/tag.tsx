@@ -1,12 +1,16 @@
 import React from "react";
 import { connect, useConnect, css } from "frontity";
-import IconSearch from "../icons/icon-search";
 import IconWord from "../icons/icon-word";
 import IconReview from "../icons/icon-review";
 import { Packages, Tag as ITag } from "../../../types";
 
 const Tag: React.FC<{ tag: ITag }> = ({ tag }) => {
-  const { state } = useConnect<Packages>();
+  const { state, actions } = useConnect<Packages>();
+
+  const handleAddWord: React.MouseEventHandler<HTMLButtonElement> = () => {
+    actions.theme.initAddWordForm(tag.id);
+    actions.router.set("/add-word");
+  };
 
   const containerStyles = css`
     display: flex;
@@ -51,10 +55,10 @@ const Tag: React.FC<{ tag: ITag }> = ({ tag }) => {
     <div css={containerStyles}>
       <div>{tag.name}</div>
       <div css={buttonsWrapper}>
-        <button css={buttonStyles}>
+        <button type="button" css={buttonStyles} onClick={handleAddWord}>
           <IconWord css={iconStyles} />
         </button>
-        <button css={buttonStyles}>
+        <button type="button" css={buttonStyles}>
           <IconReview css={iconStyles} />
         </button>
       </div>
