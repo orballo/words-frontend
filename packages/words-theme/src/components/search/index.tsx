@@ -15,7 +15,6 @@ const Search: React.FC = () => {
   const { searchForm } = state.theme;
 
   React.useEffect(() => {
-    actions.source.getAllWords();
     return () => actions.theme.resetSearchForm();
   }, []);
 

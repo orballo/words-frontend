@@ -8,10 +8,6 @@ import { Packages } from "../../../types";
 const Dashboard: React.FC = () => {
   const { state, actions } = useConnect<Packages>();
 
-  React.useEffect(() => {
-    actions.source.getAllTags();
-  }, []);
-
   const containerStyles = css`
     width: 100%;
     max-width: 1024px;
@@ -29,7 +25,7 @@ const Dashboard: React.FC = () => {
     }
   `;
 
-  return !state.auth.isSynced ? (
+  return !state.source.isSynced ? (
     <Loading />
   ) : (
     <>

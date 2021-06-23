@@ -65,6 +65,7 @@ export default interface Theme extends Package {
       };
     };
     source: {
+      isSynced: boolean;
       words?: Word[];
       tags?: Tag[];
       isRequestingWords: boolean;
@@ -112,6 +113,7 @@ export default interface Theme extends Package {
       signout: AsyncAction<Packages>;
     };
     source: {
+      afterCSR: AsyncAction<Packages>;
       getAllTags: AsyncAction<Packages>;
       addTag: AsyncAction<Packages>;
       editTag: AsyncAction<Packages>;

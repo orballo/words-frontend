@@ -1,5 +1,5 @@
 import Root from "./components";
-import { fetch } from "frontity";
+import { fetch, observe } from "frontity";
 import Theme from "../types";
 
 const theme: Theme = {
@@ -42,6 +42,7 @@ const theme: Theme = {
       },
     },
     source: {
+      isSynced: false,
       tags: [],
       words: [],
       isRequestingWords: true,
@@ -207,6 +208,17 @@ const theme: Theme = {
       },
     },
     source: {
+      afterCSR: async ({ state, actions }) => {
+        observe(async () => {
+          if (!!state.auth.user) {
+            await Promise.all([
+              actions.source.getAllWords(),
+              actions.source.getAllTags(),
+            ]);
+            state.source.isSynced = true;
+          }
+        });
+      },
       getAllTags: async ({ state }) => {
         state.source.isRequestingTags = true;
 
