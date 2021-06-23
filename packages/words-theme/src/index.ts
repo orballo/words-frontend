@@ -275,12 +275,16 @@ const theme: Theme = {
           meaning: addWordForm.meaning.trim(),
           tags: addWordForm.tags,
         };
+
         const response = await fetch(endpoint.toString(), {
           method: "POST",
           credentials: "include",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
         });
+        const body = await response.json();
+
+        state.source.words.unshift(body);
 
         addWordForm.isSubmitting = false;
       },
@@ -302,6 +306,11 @@ const theme: Theme = {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
         });
+        const body = await response.json();
+        const index = state.source.words.findIndex(
+          (word) => word.id === body.id
+        );
+        state.source.words[index] = body;
 
         editWordForm.isSubmitting = false;
       },
@@ -314,12 +323,16 @@ const theme: Theme = {
         const payload = {
           id: editWordForm.id,
         };
-        const response = await fetch(endpoint.toString(), {
+        await fetch(endpoint.toString(), {
           method: "DELETE",
           credentials: "include",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
         });
+        const index = state.source.words.findIndex(
+          (word) => word.id === editWordForm.id
+        );
+        state.source.words.splice(index, 1);
 
         editWordForm.isSubmitting = false;
       },
