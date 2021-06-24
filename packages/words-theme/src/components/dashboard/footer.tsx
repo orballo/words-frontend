@@ -22,6 +22,10 @@ const Footer: React.FC = () => {
     actions.router.set("/add-tag");
   };
 
+  const handleReview: React.MouseEventHandler<HTMLButtonElement> = () => {
+    actions.router.set("/review");
+  };
+
   const footerStyles = css`
     position: fixed;
     left: 0;
@@ -38,7 +42,7 @@ const Footer: React.FC = () => {
       <ButtonFooter Icon={IconSearch} onClick={handleSearch} />
       <ButtonFooter Icon={IconWord} onClick={handleAddWord} />
       <ButtonFooter Icon={IconTag} onClick={handleAddTag} />
-      <ButtonFooter Icon={IconReview} />
+      <ButtonFooter isReview Icon={IconReview} onClick={handleReview} />
     </footer>
   );
 };

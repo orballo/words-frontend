@@ -45,7 +45,13 @@ const InputText: React.FC<Props> = ({ label, className, ...props }) => {
   return (
     <label css={labelStyles} className={className}>
       <span css={spanStyles}>{label}</span>
-      <input type="text" autoCapitalize="off" css={inputStyles} {...props} />
+      <input
+        type="text"
+        autoCapitalize="off"
+        autoComplete="off"
+        css={inputStyles}
+        {...props}
+      />
     </label>
   );
 };

@@ -65,7 +65,11 @@ const EditTag: React.FC = () => {
             label="Save changes"
             disabled={!editTagForm.name || editTagForm.isSubmitting}
           />
-          <ButtonDelete label="Remove tag" onClick={handleDelete} />
+          <ButtonDelete
+            label="Remove tag"
+            onClick={handleDelete}
+            disabled={editTagForm.isSubmitting}
+          />
         </div>
       </Form>
     </div>

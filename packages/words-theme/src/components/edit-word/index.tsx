@@ -93,7 +93,11 @@ const EditWord: React.FC = () => {
               editWordForm.isSubmitting
             }
           />
-          <ButtonDelete label="Remove word" onClick={handleDelete} />
+          <ButtonDelete
+            label="Remove word"
+            onClick={handleDelete}
+            disabled={editWordForm.isSubmitting}
+          />
         </div>
       </Form>
     </div>

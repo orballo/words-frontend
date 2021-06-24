@@ -21,6 +21,11 @@ const ButtonDelete: React.FC<Props> = ({ label, ...props }) => {
     color: ${state.theme.colors.textError};
     background-color: ${state.theme.colors.bgTwo};
     cursor: pointer;
+
+    &:disabled {
+      color: ${state.theme.colors.textError}77;
+      border: 2px solid ${state.theme.colors.textError}77;
+    }
   `;
 
   return (

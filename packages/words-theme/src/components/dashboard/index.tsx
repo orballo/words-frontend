@@ -29,7 +29,7 @@ const Dashboard: React.FC = () => {
     <Loading />
   ) : (
     <>
-      <div css={containerStyles}>
+      <main css={containerStyles}>
         {state.source.isRequestingTags ? (
           <Loading css={loadingStyles} />
         ) : (
@@ -39,7 +39,7 @@ const Dashboard: React.FC = () => {
             ))}
           </div>
         )}
-      </div>
+      </main>
       <Footer />
     </>
   );

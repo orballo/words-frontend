@@ -22,13 +22,17 @@ const Tag: React.FC<{ tag: ITag }> = ({ tag }) => {
     actions.router.set("/add-word");
   };
 
+  const handleReview: React.MouseEventHandler<HTMLButtonElement> = () => {
+    actions.router.set(`/review/${tag.id}`);
+  };
+
   const containerStyles = css`
     display: flex;
     align-items: center;
     justify-content: space-between;
     background-color: ${state.theme.colors.bgTwo};
     color: ${state.theme.colors.textTwo};
-    height: 44px;
+    min-height: 44px;
     margin-bottom: 12px;
     padding-left: 12px;
     padding-right: 3px;
@@ -49,6 +53,8 @@ const Tag: React.FC<{ tag: ITag }> = ({ tag }) => {
     height: 100%;
     flex-grow: 1;
     text-align: left;
+    padding: 8px 0;
+    box-sizing: border-box;
   `;
 
   const buttonsWrapper = css`
@@ -56,6 +62,7 @@ const Tag: React.FC<{ tag: ITag }> = ({ tag }) => {
   `;
 
   const buttonStyles = css`
+    position: relative;
     background: none;
     border: none;
     color: ${state.theme.colors.textTwo};
@@ -66,11 +73,31 @@ const Tag: React.FC<{ tag: ITag }> = ({ tag }) => {
     align-items: center;
     font-size: 18px;
     cursor: pointer;
+
+    &:disabled {
+      color: ${state.theme.colors.textTwo}77;
+    }
   `;
 
   const iconStyles = css`
     height: 18px;
     width: 18px;
+  `;
+
+  const badgeStyles = css`
+    position: absolute;
+    border-radius: 50px;
+    font-size: 11px;
+    color: ${state.theme.colors.textOne};
+    background-color: ${state.theme.colors.textError};
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 14px;
+    min-width: 14px;
+    top: 4px;
+    left: 20px;
+    padding: 1px 1px;
   `;
 
   return (
@@ -85,8 +112,18 @@ const Tag: React.FC<{ tag: ITag }> = ({ tag }) => {
         <button type="button" css={buttonStyles} onClick={handleAddWord}>
           <IconWord css={iconStyles} />
         </button>
-        <button type="button" css={buttonStyles}>
+        <button
+          type="button"
+          css={buttonStyles}
+          onClick={handleReview}
+          disabled={!state.review.readyForTagTotal(tag.id)}
+        >
           <IconReview css={iconStyles} />
+          {!!state.review.readyForTagTotal(tag.id) && (
+            <span css={badgeStyles}>
+              {state.review.readyForTagTotal(tag.id)}
+            </span>
+          )}
         </button>
       </div>
     </div>

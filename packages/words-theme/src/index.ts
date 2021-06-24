@@ -1,5 +1,6 @@
 import Root from "./components";
 import { fetch, observe } from "frontity";
+import { match } from "path-to-regexp";
 import Theme from "../types";
 
 const theme: Theme = {
@@ -19,7 +20,13 @@ const theme: Theme = {
       isAddTag: ({ state }) => state.router.link === "/add-tag",
       isEditWord: ({ state }) => state.router.link === "/edit-word",
       isEditTag: ({ state }) => state.router.link === "/edit-tag",
-      isReview: false,
+      isReview: ({ state }) => state.router.link.startsWith("/review"),
+      parsedTag: ({ state }) => {
+        const parse = match("/(search|review)/:tag");
+        const result = parse(state.router.link) as any;
+        if (!result?.params?.tag) return null;
+        return parseInt(result.params.tag);
+      },
     },
     auth: {
       isSynced: false,
@@ -71,10 +78,10 @@ const theme: Theme = {
       searchForm: {
         search: "",
         baseWords: ({ state }) => {
-          if (!state.theme.searchForm.tag) return state.source.words;
+          if (!state.router.parsedTag) return state.source.words;
 
           const words = state.source.words.filter((word) =>
-            word.tags.includes(state.theme.searchForm.tag)
+            word.tags.includes(state.router.parsedTag)
           );
 
           return words;
@@ -99,6 +106,88 @@ const theme: Theme = {
         name: "",
         isSubmitting: false,
       },
+    },
+    review: {
+      reviewing: [],
+      ready: ({ state }) => {
+        return state.source.words;
+      },
+      readyTotal: ({ state }) => {
+        return state.review.ready.length;
+      },
+      readyForTag: ({ state }) => (tag) => {
+        return state.source.words.filter((word) => {
+          const includesTag = word.tags.includes(tag);
+          const isNewWord = word.level === 0;
+          const isReviewTime =
+            state.review.time - new Date(word.reviewed_at).getTime() >=
+            state.review.levels[word.level].interval;
+          return includesTag && (isNewWord || isReviewTime);
+        });
+      },
+      readyForTagTotal: ({ state }) => (tag) => {
+        return state.review.readyForTag(tag).length;
+      },
+      levels: {
+        0: {
+          name: 0,
+          color: "",
+          interval: 0,
+        },
+        1: {
+          name: 1,
+          color: "",
+          interval: 2 * 60 * 60 * 1000, // 2 hours
+        },
+        2: {
+          name: 2,
+          color: "",
+          interval: 4 * 60 * 60 * 1000, // 4 hours
+        },
+        3: {
+          name: 3,
+          color: "",
+          interval: 8 * 60 * 60 * 1000, // 8 hours
+        },
+        4: {
+          name: 4,
+          color: "",
+          interval: 24 * 60 * 60 * 1000, // 24 hours
+        },
+        5: {
+          name: 5,
+          color: "",
+          interval: 2 * 24 * 60 * 60 * 1000, // 2 days
+        },
+        6: {
+          name: 6,
+          color: "",
+          interval: 3 * 24 * 60 * 60 * 1000, // 3 days
+        },
+        7: {
+          name: 7,
+          color: "",
+          interval: 5 * 24 * 60 * 60 * 1000, // 5 days
+        },
+        8: {
+          name: 8,
+          color: "",
+          interval: 7 * 24 * 60 * 60 * 1000, // 1 week
+        },
+        9: {
+          name: 9,
+          color: "",
+          interval: 14 * 24 * 60 * 60 * 1000, // 2 weeks
+        },
+        10: {
+          name: 10,
+          color: "",
+          interval: 30 * 24 * 60 * 60 * 1000, // 1 month
+        },
+      },
+    },
+    settings: {
+      reviewBundleSize: 10,
     },
   },
   actions: {
@@ -232,6 +321,7 @@ const theme: Theme = {
               actions.source.getAllTags(),
             ]);
             state.source.isSynced = true;
+            state.review.time = Date.now();
           }
         });
       },
@@ -290,7 +380,7 @@ const theme: Theme = {
 
         editTagForm.isSubmitting = false;
       },
-      deleteTag: async ({ state }) => {
+      deleteTag: async ({ state, actions }) => {
         const { editTagForm } = state.theme;
 
         editTagForm.isSubmitting = true;
@@ -309,6 +399,7 @@ const theme: Theme = {
           (tag) => tag.id === editTagForm.id
         );
         state.source.tags.splice(index, 1);
+        await actions.source.getAllWords();
 
         editTagForm.isSubmitting = false;
       },
@@ -435,7 +526,6 @@ const theme: Theme = {
         const { searchForm } = state.theme;
 
         searchForm.search = "";
-        delete searchForm.tag;
       },
       initEditWordForm: ({ state }) => (id) => {
         const word = state.source.words.find((word) => word.id === id);
@@ -482,6 +572,28 @@ const theme: Theme = {
 
         delete editTagForm.id;
         editTagForm.name = "";
+      },
+    },
+    review: {
+      afterCSR: async ({ state }) => {
+        observe(async () => {
+          if (!!state.auth.user) {
+            state.review.time = Date.now();
+          }
+        });
+      },
+      init: ({ state }) => {
+        const { parsedTag } = state.router;
+        const reviewingWords = (parsedTag
+          ? state.review.ready
+          : state.review.readyForTag(parsedTag)
+        ).map((word) => ({
+          ...word,
+          isCorrect: false,
+          isFailed: false,
+          failedTimes: 0,
+        }));
+        state.review.reviewing = reviewingWords;
       },
     },
   },

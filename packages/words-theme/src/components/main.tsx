@@ -7,6 +7,7 @@ import AddWord from "./add-word";
 import AddTag from "./add-tag";
 import EditWord from "./edit-word";
 import EditTag from "./edit-tag";
+import Review from "./review";
 import { Packages } from "../../types";
 
 const Main: React.FC = () => {
@@ -39,6 +40,7 @@ const Main: React.FC = () => {
       {state.router.isAddTag && <AddTag />}
       {state.router.isEditWord && <EditWord />}
       {state.router.isEditTag && <EditTag />}
+      {state.router.isReview && <Review />}
     </main>
   );
 };

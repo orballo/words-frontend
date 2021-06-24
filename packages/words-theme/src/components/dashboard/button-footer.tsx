@@ -4,11 +4,20 @@ import { Packages } from "../../../types";
 
 interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   label?: string;
+  isReview?: boolean;
   Icon: React.FC;
 }
 
-const ButtonFooter: React.FC<Props> = ({ label, Icon, ...props }) => {
+const ButtonFooter: React.FC<Props> = ({
+  label,
+  isReview = false,
+  Icon,
+  ...props
+}) => {
+  const { state } = useConnect<Packages>();
+
   const buttonStyles = css`
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -16,6 +25,10 @@ const ButtonFooter: React.FC<Props> = ({ label, Icon, ...props }) => {
     background: none;
     flex-grow: 1;
     box-shadow: 0 0 1px 0 #aaaaaa;
+
+    &:disabled {
+      color: ${state.theme.colors.textTwo}77;
+    }
   `;
 
   const iconStyles = css`
@@ -23,10 +36,31 @@ const ButtonFooter: React.FC<Props> = ({ label, Icon, ...props }) => {
     width: 24px;
   `;
 
+  const badgeStyles = css`
+    position: absolute;
+    border-radius: 50px;
+    font-size: 12px;
+    color: ${state.theme.colors.textOne};
+    background-color: ${state.theme.colors.textError};
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 16px;
+    min-width: 16px;
+    top: 6px;
+    right: 24px;
+    padding: 1px 1px;
+  `;
+
   return (
-    <button css={buttonStyles} {...props}>
+    <button
+      css={buttonStyles}
+      {...props}
+      disabled={isReview && !state.review.readyTotal}
+    >
       {label ? label : ""}
       <Icon css={iconStyles} />
+      {isReview && <span css={badgeStyles}>{state.review.readyTotal}</span>}
     </button>
   );
 };

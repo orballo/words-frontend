@@ -27,6 +27,18 @@ export interface Tag {
   updated_at: string;
 }
 
+export interface Level {
+  name: number;
+  color: string;
+  interval: number;
+}
+
+export interface WordReviewing extends Word {
+  isCorrect: boolean;
+  isFailed: boolean;
+  failedTimes: number;
+}
+
 export default interface Theme extends Package {
   name: "words-theme";
   state: {
@@ -41,7 +53,8 @@ export default interface Theme extends Package {
       isAddTag: Derived<Packages, boolean>;
       isEditWord: Derived<Packages, boolean>;
       isEditTag: Derived<Packages, boolean>;
-      isReview: boolean;
+      isReview: Derived<Packages, boolean>;
+      parsedTag: Derived<Packages, number | null>;
     };
     auth: {
       isSynced: boolean;
@@ -93,7 +106,6 @@ export default interface Theme extends Package {
       };
       searchForm: {
         search: string;
-        tag?: number;
         baseWords: Derived<Packages, Word[]>;
         filteredWords: Derived<Packages, Word[]>;
       };
@@ -109,6 +121,19 @@ export default interface Theme extends Package {
         name: string;
         isSubmitting: boolean;
       };
+    };
+    review: {
+      time?: number;
+      current?: number;
+      reviewing: WordReviewing[];
+      ready: Derived<Packages, Word[]>;
+      readyTotal: Derived<Packages, number>;
+      readyForTag: Derived<Packages, number, Word[]>;
+      readyForTagTotal: Derived<Packages, number, number>;
+      levels: Record<number, Level>;
+    };
+    settings: {
+      reviewBundleSize: number;
     };
   };
   actions: {
@@ -145,6 +170,10 @@ export default interface Theme extends Package {
       initEditTagForm: Action<Packages, number>;
       updateEditTagField: Action<Packages, string, string>;
       resetEditTagForm: Action<Packages>;
+    };
+    review: {
+      afterCSR: AsyncAction<Packages>;
+      init: Action<Packages>;
     };
   };
 }

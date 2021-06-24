@@ -3,13 +3,10 @@ import { connect, useConnect, css } from "frontity";
 import Loading from "../loading";
 import ButtonClose from "../forms/button-close";
 import Form from "../forms/form";
-import ButtonEdit from "../forms/button-edit";
 import InputSearch from "../forms/input-search";
 import Word from "./word";
-import { match } from "path-to-regexp";
-import { Packages } from "../../../types";
 
-const parse = match("/search/:tag");
+import { Packages } from "../../../types";
 
 const Search: React.FC = () => {
   const { state, actions } = useConnect<Packages>();
@@ -17,16 +14,16 @@ const Search: React.FC = () => {
   const [title, setTitle] = React.useState("All the words");
 
   React.useEffect(() => {
-    if (!state.source.isSynced) return;
+    if (state.source.isSynced) {
+      const { parsedTag } = state.router;
 
-    const result = parse(state.router.link) as any;
-    if (result.params) {
-      const { tag } = result.params;
-      const tagName = state.source.tags.find((t) => t.id === parseInt(tag))
-        .name;
-      setTitle(tagName);
-      searchForm.tag = parseInt(tag);
+      if (parsedTag) {
+        const tagName = state.source.tags.find((tag) => tag.id === parsedTag)
+          .name;
+        setTitle(tagName);
+      }
     }
+
     return () => actions.theme.resetSearchForm();
   }, [state.source.isSynced]);
 
