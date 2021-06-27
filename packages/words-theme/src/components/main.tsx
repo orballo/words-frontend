@@ -1,5 +1,6 @@
 import React from "react";
 import { connect, useConnect, css } from "frontity";
+import Loading from "./loading";
 import Home from "./home";
 import Dashboard from "./dashboard";
 import Search from "./search";
@@ -31,7 +32,9 @@ const Main: React.FC = () => {
     margin: auto;
   `;
 
-  return (
+  return !state.router.isHome && !state.source.isSynced ? (
+    <Loading />
+  ) : (
     <main css={mainStyles}>
       {state.router.isHome && <Home />}
       {state.router.isDashboard && <Dashboard />}

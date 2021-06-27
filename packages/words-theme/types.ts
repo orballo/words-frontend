@@ -123,9 +123,15 @@ export default interface Theme extends Package {
       };
     };
     review: {
+      status: "input" | "correct" | "failed";
+      answer: string;
       time?: number;
-      current?: number;
       reviewing: WordReviewing[];
+      current: Derived<Packages, WordReviewing | undefined>;
+      remaining: Derived<Packages, number>;
+      isFinish: Derived<Packages, boolean>;
+      incorrect: Derived<Packages, number>;
+      correct: Derived<Packages, number>;
       ready: Derived<Packages, Word[]>;
       readyTotal: Derived<Packages, number>;
       readyForTag: Derived<Packages, number, Word[]>;
@@ -174,6 +180,13 @@ export default interface Theme extends Package {
     review: {
       afterCSR: AsyncAction<Packages>;
       init: Action<Packages>;
+      reset: Action<Packages>;
+      shuffle: Action<Packages>;
+      updateAnswer: Action<Packages, string>;
+      checkAnswer: AsyncAction<Packages>;
+      next: Action<Packages>;
+      levelUp: AsyncAction<Packages>;
+      levelDown: AsyncAction<Packages>;
     };
   };
 }

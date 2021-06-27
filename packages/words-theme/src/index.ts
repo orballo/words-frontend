@@ -1,6 +1,7 @@
 import Root from "./components";
 import { fetch, observe } from "frontity";
 import { match } from "path-to-regexp";
+import { shuffle } from "./utils";
 import Theme from "../types";
 
 const theme: Theme = {
@@ -108,7 +109,28 @@ const theme: Theme = {
       },
     },
     review: {
+      status: "input",
+      answer: "",
       reviewing: [],
+      current: ({ state }) => {
+        return state.review.reviewing.find((word) => !word.isCorrect);
+      },
+      remaining: ({ state }) => {
+        return state.review.reviewing.filter((word) => !word.isCorrect).length;
+      },
+      isFinish: ({ state }) => {
+        return !state.review.remaining;
+      },
+      incorrect: ({ state }) => {
+        const total = state.review.reviewing.length;
+        const failed = state.review.reviewing.filter((word) => word.isFailed)
+          .length;
+
+        return Math.round((100 * failed) / total);
+      },
+      correct: ({ state }) => {
+        return 100 - state.review.incorrect;
+      },
       ready: ({ state }) => {
         return state.source.words;
       },
@@ -584,17 +606,64 @@ const theme: Theme = {
       },
       init: ({ state }) => {
         const { parsedTag } = state.router;
-        const reviewingWords = (parsedTag
-          ? state.review.ready
-          : state.review.readyForTag(parsedTag)
-        ).map((word) => ({
-          ...word,
-          isCorrect: false,
-          isFailed: false,
-          failedTimes: 0,
-        }));
+        const reviewingWords = shuffle(
+          (!parsedTag
+            ? state.review.ready
+            : state.review.readyForTag(parsedTag)
+          ).map((word) => ({
+            ...word,
+            isCorrect: false,
+            isFailed: false,
+            failedTimes: 0,
+          }))
+        );
         state.review.reviewing = reviewingWords;
       },
+      reset: ({ state }) => {
+        state.review.answer = "";
+        state.review.status = "input";
+        state.review.reviewing = [];
+      },
+      shuffle: ({ state }) => {
+        state.review.reviewing = shuffle(state.review.reviewing);
+      },
+      updateAnswer: ({ state }) => (value) => {
+        state.review.answer = value;
+      },
+      checkAnswer: async ({ state }) => {
+        const { review } = state;
+
+        if (!review.current) return;
+
+        if (
+          review.current.spelling.toLowerCase() === review.answer.toLowerCase()
+        ) {
+          review.status = "correct";
+          if (review.current.isFailed && review.current.level) {
+            // await actions.theme.levelDown(
+            //   review.current.id,
+            //   review.current.failedTimes
+            // );
+          } else {
+            // await actions.theme.levelUp(review.current.id);
+          }
+
+          review.current.isCorrect = true;
+          review.answer = "";
+          review.status = "input";
+        } else {
+          review.current.isFailed = true;
+          review.current.failedTimes++;
+          review.status = "failed";
+        }
+      },
+      next: ({ state, actions }) => {
+        if (state.review.current.level !== 0) actions.review.shuffle();
+        state.review.answer = "";
+        state.review.status = "input";
+      },
+      levelUp: async ({ state }) => {},
+      levelDown: async ({ state }) => {},
     },
   },
 };

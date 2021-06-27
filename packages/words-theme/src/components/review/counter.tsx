@@ -6,15 +6,17 @@ const Counter: React.FC = () => {
   const { state } = useConnect<Packages>();
 
   const containerStyles = css`
-    height: 44px;
-    min-width: 44px;
+    height: 52px;
+    min-width: 52px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 18px;
+    padding-left: 12px;
+    box-sizing: border-box;
   `;
 
-  return <div css={containerStyles}>0/{state.review.readyTotal}</div>;
+  return <div css={containerStyles}>{state.review.remaining} remaining</div>;
 };
 
 export default connect(Counter);

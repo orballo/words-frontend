@@ -48,7 +48,14 @@ const InputSearch: React.FC<Props> = ({ ...props }) => {
 
   return (
     <label css={labelStyles}>
-      <input type="text" css={inputStyles} placeholder="Search..." {...props} />
+      <input
+        type="text"
+        css={inputStyles}
+        autoComplete="off"
+        autoCapitalize="off"
+        placeholder="Search..."
+        {...props}
+      />
       <IconSearch css={iconStyles} />
     </label>
   );
