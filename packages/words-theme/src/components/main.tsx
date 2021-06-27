@@ -27,7 +27,7 @@ const Main: React.FC = () => {
   }, [state.auth.isSynced, state.auth.user]);
 
   const mainStyles = css`
-    max-width: 1024px;
+    max-width: 768px;
     min-height: 100%;
     margin: auto;
   `;

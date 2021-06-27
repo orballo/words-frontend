@@ -7,10 +7,16 @@ import { Packages, Tag } from "../../../types";
 interface Props {
   label: string;
   value: { value: number }[];
+  disabled?: boolean;
   onChange: (tags: { value: number; label: string }[]) => void;
 }
 
-const InputTags: React.FC<Props> = ({ label, value, onChange }) => {
+const InputTags: React.FC<Props> = ({
+  label,
+  value,
+  disabled = false,
+  onChange,
+}) => {
   const { state } = useConnect<Packages>();
 
   const options = state.source.tags.map((tag) => ({
@@ -89,6 +95,7 @@ const InputTags: React.FC<Props> = ({ label, value, onChange }) => {
         options={options}
         placeholder="Tags..."
         onChange={onChange}
+        isDisabled={disabled}
       />
     </label>
   );

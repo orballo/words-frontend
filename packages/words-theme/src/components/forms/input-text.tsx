@@ -36,10 +36,6 @@ const InputText: React.FC<Props> = ({ label, className, ...props }) => {
     &::placeholder {
       color: ${state.theme.colors.textOne}55;
     }
-
-    &:disabled {
-      opacity: 0.8;
-    }
   `;
 
   return (

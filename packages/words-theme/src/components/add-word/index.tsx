@@ -69,6 +69,7 @@ const AddWord: React.FC = () => {
             value: tag,
             label: state.source.tags.find((t) => t.id === tag).name,
           }))}
+          disabled={addWordForm.isSubmitting}
           onChange={handleTagsChange}
         />
         <ButtonSubmit
