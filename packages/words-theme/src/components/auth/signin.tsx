@@ -71,15 +71,10 @@ const SignIn: React.FC = () => {
         />
       )}
       {signinForm.isError && <MessageError message={signinForm.errorMessage} />}
-      {signinForm.isSubmitting ? (
-        <Loading css={loadingStyles} />
-      ) : (
-        <ButtonSubmit
-          label={
-            signinForm.isAwaitingCode ? "Sign in" : "Get verification code"
-          }
-        />
-      )}
+      <ButtonSubmit
+        label={signinForm.isAwaitingCode ? "Sign in" : "Get verification code"}
+        disabled={signinForm.isSubmitting}
+      />
       <MessageMethod />
     </form>
   );

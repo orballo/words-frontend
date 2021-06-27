@@ -75,15 +75,10 @@ const SignUp: React.FC = () => {
         />
       )}
       {signupForm.isError && <MessageError message={signupForm.errorMessage} />}
-      {signupForm.isSubmitting ? (
-        <Loading css={loadingStyles} />
-      ) : (
-        <ButtonSubmit
-          label={
-            signupForm.isAwaitingCode ? "Sign up" : "Get verification code"
-          }
-        />
-      )}
+      <ButtonSubmit
+        label={signupForm.isAwaitingCode ? "Sign up" : "Get verification code"}
+        disabled={signupForm.isSubmitting}
+      />
       <MessageMethod />
     </form>
   );
