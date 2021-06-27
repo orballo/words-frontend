@@ -35,6 +35,15 @@ const Footer: React.FC = () => {
     display: flex;
     background-color: ${state.theme.colors.bgTwo};
     box-shadow: 0 0 4px 0 ${state.theme.colors.textTwo};
+
+    @media (min-width: 768px) {
+      position: absolute;
+      width: 52px;
+      flex-direction: column;
+      height: calc(52px * 4);
+      top: 16px;
+      left: -56px;
+    }
   `;
 
   return (

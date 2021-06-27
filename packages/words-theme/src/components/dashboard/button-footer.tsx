@@ -29,6 +29,10 @@ const ButtonFooter: React.FC<Props> = ({
     &:disabled {
       color: ${state.theme.colors.textTwo}77;
     }
+
+    @media (min-width: 768px) {
+      min-height: 52px;
+    }
   `;
 
   const iconStyles = css`

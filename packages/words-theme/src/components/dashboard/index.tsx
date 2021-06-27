@@ -16,19 +16,18 @@ const Dashboard: React.FC = () => {
     padding: 16px 12px;
     box-sizing: border-box;
     background: none;
+    position: relative;
   `;
 
   return (
-    <>
-      <main css={containerStyles}>
-        <div>
-          {state.source.tags.map((tag) => (
-            <Tag key={tag.id} tag={tag} />
-          ))}
-        </div>
-      </main>
+    <div css={containerStyles}>
+      <div>
+        {state.source.tags.map((tag) => (
+          <Tag key={tag.id} tag={tag} />
+        ))}
+      </div>
       <Footer />
-    </>
+    </div>
   );
 };
 
