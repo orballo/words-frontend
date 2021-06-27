@@ -6,6 +6,7 @@ import Loading from "../loading";
 import ButtonSubmit from "../forms/button-submit";
 import Final from "./final";
 import { Packages } from "../../../types";
+import { KeyboardEventHandler } from "react";
 
 const Review: React.FC = () => {
   const { state, actions } = useConnect<Packages>();
@@ -31,11 +32,11 @@ const Review: React.FC = () => {
       }
     };
 
-    window.addEventListener("keydown", handleEnter);
+    window.addEventListener("keydown", handleEnter as any);
 
     return () => {
       actions.review.reset();
-      window.removeEventListener("keydown", handleEnter);
+      window.removeEventListener("keydown", handleEnter as any);
     };
   }, []);
 

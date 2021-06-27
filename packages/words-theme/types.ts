@@ -160,6 +160,7 @@ export default interface Theme extends Package {
       getAllWords: AsyncAction<Packages>;
       addWord: AsyncAction<Packages>;
       editWord: AsyncAction<Packages>;
+      reviewWord: AsyncAction<Packages, number, number>;
       deleteWord: AsyncAction<Packages>;
     };
     theme: {

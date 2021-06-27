@@ -132,7 +132,13 @@ const theme: Theme = {
         return 100 - state.review.incorrect;
       },
       ready: ({ state }) => {
-        return state.source.words;
+        return state.source.words.filter((word) => {
+          const isNewWord = word.level === 0;
+          const isReviewTime =
+            state.review.time - new Date(word.reviewed_at).getTime() >=
+            state.review.levels[word.level].interval;
+          return isNewWord || isReviewTime;
+        });
       },
       readyTotal: ({ state }) => {
         return state.review.ready.length;
@@ -489,6 +495,21 @@ const theme: Theme = {
 
         editWordForm.isSubmitting = false;
       },
+      reviewWord: ({ state }) => async (id, level) => {
+        const endpoint = new URL("/words/review", state.auth.backend);
+        const payload = { id, level };
+        const response = await fetch(endpoint.toString(), {
+          method: "PATCH",
+          credentials: "include",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+        const body = await response.json();
+        const index = state.source.words.findIndex(
+          (word) => word.id === body.id
+        );
+        state.source.words[index] = body;
+      },
       deleteWord: async ({ state }) => {
         const { editWordForm } = state.theme;
 
@@ -617,7 +638,10 @@ const theme: Theme = {
             failedTimes: 0,
           }))
         );
-        state.review.reviewing = reviewingWords;
+        state.review.reviewing = reviewingWords.slice(
+          0,
+          state.settings.reviewBundleSize
+        );
       },
       reset: ({ state }) => {
         state.review.answer = "";
@@ -630,22 +654,18 @@ const theme: Theme = {
       updateAnswer: ({ state }) => (value) => {
         state.review.answer = value;
       },
-      checkAnswer: async ({ state }) => {
+      checkAnswer: async ({ state, actions }) => {
         const { review } = state;
 
         if (!review.current) return;
 
-        if (
-          review.current.spelling.toLowerCase() === review.answer.toLowerCase()
-        ) {
+        if (review.current.spelling === review.answer.trim()) {
           review.status = "correct";
+
           if (review.current.isFailed && review.current.level) {
-            // await actions.theme.levelDown(
-            //   review.current.id,
-            //   review.current.failedTimes
-            // );
+            await actions.review.levelDown();
           } else {
-            // await actions.theme.levelUp(review.current.id);
+            await actions.review.levelUp();
           }
 
           review.current.isCorrect = true;
@@ -662,8 +682,22 @@ const theme: Theme = {
         state.review.answer = "";
         state.review.status = "input";
       },
-      levelUp: async ({ state }) => {},
-      levelDown: async ({ state }) => {},
+      levelUp: async ({ state, actions }) => {
+        const { current } = state.review;
+        const level = current.level + 1;
+        await actions.source.reviewWord(current.id, level);
+      },
+      levelDown: async ({ state, actions }) => {
+        const { current } = state.review;
+        const level = (() => {
+          if (current.level <= 1) return current.level;
+          const penaltyFactor = current.level >= 5 ? 2 : 1;
+          const failedFactor = Math.ceil(current.failedTimes / 2);
+          const downgradedLevel = current.level - penaltyFactor * failedFactor;
+          return downgradedLevel >= 1 ? downgradedLevel : 1;
+        })();
+        await actions.source.reviewWord(current.id, level);
+      },
     },
   },
 };

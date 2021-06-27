@@ -16,7 +16,11 @@ const Counter: React.FC = () => {
     box-sizing: border-box;
   `;
 
-  return <div css={containerStyles}>{state.review.remaining} remaining</div>;
+  return (
+    !!state.review.remaining && (
+      <div css={containerStyles}>{state.review.remaining} remaining</div>
+    )
+  );
 };
 
 export default connect(Counter);
