@@ -91,7 +91,7 @@ const Main: React.FC = () => {
   `;
 
   return (
-    <main css={containerStyles}>
+    <div css={containerStyles}>
       <div>
         <Logo css={logoStyles} />
         <p css={descriptionStyles}>
@@ -117,7 +117,7 @@ const Main: React.FC = () => {
         </div>
       </div>
       <Auth />
-    </main>
+    </div>
   );
 };
 

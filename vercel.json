@@ -1,7 +1,11 @@
 {
   "redirects": [
     {
-      "source": "/",
+      "source": "/static/(.*)",
+      "destination": "build/static"
+    },
+    {
+      "source": "/(.*)",
       "destination": "build/server.js"
     }
   ]
