@@ -2,6 +2,8 @@ import { Settings } from "frontity/types";
 
 const PROD = process.env.NODE_ENV === "production";
 
+console.log("PROD:", process.env.NODE_ENV);
+
 const settings: Settings = {
   name: "words-frontend",
   state: {
