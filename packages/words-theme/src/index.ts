@@ -31,7 +31,6 @@ const theme: Theme = {
     },
     auth: {
       isSynced: false,
-      backend: "http://words.local:4000",
       signinForm: {
         email: "",
         code: "",

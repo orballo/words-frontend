@@ -58,7 +58,7 @@ export default interface Theme extends Package {
     };
     auth: {
       isSynced: boolean;
-      backend: string;
+      backend?: string;
       user?: Record<string, any>;
       signinForm: {
         email: string;
