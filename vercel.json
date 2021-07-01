@@ -23,16 +23,16 @@
   ],
   "routes": [
     {
-      "source": "/manifest.webmanifest",
-      "destination": "/manifest.webmanifest"
+      "src": "/manifest.webmanifest",
+      "dest": "/manifest.webmanifest"
     },
     {
-      "source": "/sw.js",
-      "destination": "/sw.js"
+      "src": "/sw.js",
+      "dest": "/sw.js"
     },
     {
-      "source": "/icons/(.*)",
-      "destination": "/icons/$1"
+      "src": "/icons/(.*)",
+      "dest": "/icons/$1"
     },
     {
       "src": "/static/(.*)",
