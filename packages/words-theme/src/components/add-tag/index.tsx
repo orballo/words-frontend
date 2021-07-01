@@ -36,7 +36,10 @@ const AddTag: React.FC = () => {
           onChange={handleChange}
           disabled={addTagForm.isSubmitting}
         />
-        <ButtonSubmit label="Add tag" />
+        <ButtonSubmit
+          label="Add tag"
+          disabled={!addTagForm.name || addTagForm.isSubmitting}
+        />
       </Form>
     </div>
   );
