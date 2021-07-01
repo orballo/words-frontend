@@ -15,7 +15,7 @@ const InputSearch: React.FC<Props> = ({ ...props }) => {
   `;
 
   const inputStyles = css`
-    height: 44px;
+    height: 52px;
     box-sizing: border-box;
     border: none;
     background-color: ${state.theme.colors.bgOne};
@@ -24,7 +24,7 @@ const InputSearch: React.FC<Props> = ({ ...props }) => {
     outline: none;
     padding: 0 12px;
     padding-right: 36px;
-    font-size: 16px;
+    font-size: 18px;
 
     &::placeholder {
       color: ${state.theme.colors.textOne}55;

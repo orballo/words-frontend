@@ -17,12 +17,12 @@ const InputText: React.FC<Props> = ({ label, className, ...props }) => {
   const spanStyles = css`
     display: block;
     margin-bottom: 8px;
-    font-size: 16px;
+    font-size: 18px;
   `;
 
   const inputStyles = css`
     display: block;
-    height: 44px;
+    height: 52px;
     box-sizing: border-box;
     border: none;
     background-color: ${state.theme.colors.bgOne};
@@ -30,7 +30,7 @@ const InputText: React.FC<Props> = ({ label, className, ...props }) => {
     width: 100%;
     outline: none;
     padding: 0 12px;
-    font-size: 16px;
+    font-size: 18px;
     margin-bottom: 16px;
 
     &::placeholder {

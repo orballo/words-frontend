@@ -11,12 +11,12 @@ const ButtonSubmit: React.FC<Props> = ({ label, ...props }) => {
 
   const buttonStyles = css`
     margin-top: 28px;
-    min-height: 44px;
+    min-height: 52px;
     box-sizing: border-box;
     width: 100%;
     display: block;
     padding: 0 12px;
-    font-size: 16px;
+    font-size: 18px;
     border: 2px solid ${state.theme.colors.textTwo};
     color: ${state.theme.colors.textTwo};
     background-color: ${state.theme.colors.bgTwo};

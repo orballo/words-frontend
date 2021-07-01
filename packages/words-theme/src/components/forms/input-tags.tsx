@@ -31,7 +31,7 @@ const InputTags: React.FC<Props> = ({
   const spanStyles = css`
     display: block;
     margin-bottom: 8px;
-    font-size: 16px;
+    font-size: 18px;
   `;
 
   return (
@@ -41,7 +41,7 @@ const InputTags: React.FC<Props> = ({
         styles={{
           control: (styles) => ({
             ...styles,
-            minHeight: "44px",
+            minHeight: "52px",
             border: "none",
             borderRadius: 0,
             paddingLeft: "4px",
@@ -58,6 +58,7 @@ const InputTags: React.FC<Props> = ({
           placeholder: (styles) => ({
             ...styles,
             color: state.theme.colors.textOne + "55",
+            paddingLeft: "4px",
           }),
           indicatorSeparator: (styles) => ({
             ...styles,
