@@ -1,0 +1,16 @@
+{
+  "name": "Words by Orballo",
+  "short_name": "Words",
+  "description": "Tool to learn vocabulary",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#293B5F",
+  "theme_color": "#293B5F",
+  "icons": [
+    {
+      "src": "icons/icon192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}

@@ -9,6 +9,7 @@ const settings: Settings = {
   state: {
     frontity: {
       title: "Words by Orballo",
+      description: "Tool to learn vocabulary",
     },
     auth: {
       backend: PROD

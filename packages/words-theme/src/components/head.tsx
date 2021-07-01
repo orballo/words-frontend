@@ -7,7 +7,12 @@ const Head: React.FC = () => {
 
   return (
     <FrontityHead>
+      <html lang="en" />
       <title>{state.frontity.title}</title>
+      <meta name="description" content={state.frontity.description} />
+      <link rel="canonical" href="https://words.orballo.dev" />
+      <link rel="manifest" href="/manifest.webmanifest" />
+      <link rel="icon" type="image/svg+xml" href="/icons/logo.svg" />
     </FrontityHead>
   );
 };
