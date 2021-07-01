@@ -32,10 +32,10 @@ const Tag: React.FC<{ tag: ITag }> = ({ tag }) => {
     justify-content: space-between;
     background-color: ${state.theme.colors.bgTwo};
     color: ${state.theme.colors.textTwo};
-    min-height: 44px;
+    min-height: 52px;
     margin-bottom: 12px;
     padding-left: 12px;
-    padding-right: 3px;
+    padding-right: 4px;
     box-sizing: border-box;
     box-shadow: 0 0 4px 0 ${state.theme.colors.textTwo};
 
@@ -49,7 +49,7 @@ const Tag: React.FC<{ tag: ITag }> = ({ tag }) => {
     background: none;
     border: none;
     outline: none;
-    font-size: 16px;
+    font-size: 18px;
     height: 100%;
     flex-grow: 1;
     text-align: left;
@@ -66,13 +66,15 @@ const Tag: React.FC<{ tag: ITag }> = ({ tag }) => {
     background: none;
     border: none;
     color: ${state.theme.colors.textTwo};
-    width: 38px;
-    height: 44px;
+    width: 44px;
+    height: 52px;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 18px;
     cursor: pointer;
+    margin: 0;
+    padding: 0;
 
     &:disabled {
       color: ${state.theme.colors.textTwo}77;
@@ -80,8 +82,8 @@ const Tag: React.FC<{ tag: ITag }> = ({ tag }) => {
   `;
 
   const iconStyles = css`
-    height: 18px;
-    width: 18px;
+    height: 22px;
+    width: 22px;
   `;
 
   const badgeStyles = css`
@@ -95,8 +97,8 @@ const Tag: React.FC<{ tag: ITag }> = ({ tag }) => {
     justify-content: center;
     height: 14px;
     min-width: 14px;
-    top: 4px;
-    left: 20px;
+    top: 8px;
+    left: 24px;
     padding: 1px 1px;
   `;
 

@@ -64,7 +64,9 @@ const ButtonFooter: React.FC<Props> = ({
     >
       {label ? label : ""}
       <Icon css={iconStyles} />
-      {isReview && <span css={badgeStyles}>{state.review.readyTotal}</span>}
+      {isReview && !!state.review.readyTotal && (
+        <span css={badgeStyles}>{state.review.readyTotal}</span>
+      )}
     </button>
   );
 };
