@@ -2,7 +2,7 @@
   "name": "Words by Orballo",
   "short_name": "Words",
   "description": "Tool to learn vocabulary",
-  "start_url": "/",
+  "start_url": "/dashboard",
   "display": "standalone",
   "background_color": "#293B5F",
   "theme_color": "#293B5F",
