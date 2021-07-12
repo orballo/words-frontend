@@ -12,7 +12,7 @@ const settings: Settings = {
     auth: {
       backend: PROD
         ? "https://wordsbackend.orballo.dev"
-        : "http://words.local:4000",
+        : "https://words.local:4000",
     },
   },
   packages: ["words-theme", "@orballo/very-tiny-router"],
