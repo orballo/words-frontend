@@ -109,6 +109,11 @@ const Review: React.FC = () => {
     bottom: 12px;
     text-align: center;
     width: 100%;
+    font-size: 16px;
+
+    span {
+      font-size: 20px;
+    }
   `;
 
   return !state.review.reviewing.length ? (
@@ -135,7 +140,8 @@ const Review: React.FC = () => {
             />
             {state.review.status === "failed" && (
               <div css={failedStyles}>
-                Incorrect! The answer is: {state.review.current.spelling}
+                Incorrect! The answer is:{" "}
+                <span>{state.review.current.spelling}</span>
               </div>
             )}
           </div>
