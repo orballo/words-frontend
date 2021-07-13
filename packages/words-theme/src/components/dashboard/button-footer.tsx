@@ -17,6 +17,7 @@ const ButtonFooter: React.FC<Props> = ({
   const { state } = useConnect<Packages>();
 
   const buttonStyles = css`
+    cursor: pointer;
     position: relative;
     display: flex;
     align-items: center;

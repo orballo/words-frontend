@@ -74,14 +74,14 @@ const Review: React.FC = () => {
 
   const titleStyles = css`
     text-transform: uppercase;
-    font-size: 16px;
+    font-size: 18px;
     margin: 0;
     margin-bottom: 24px;
   `;
 
   const clueStyles = css`
     text-align: center;
-    font-size: 18px;
+    font-size: 22px;
     margin: 24px;
   `;
 
@@ -112,7 +112,7 @@ const Review: React.FC = () => {
     font-size: 16px;
 
     span {
-      font-size: 20px;
+      font-size: 22px;
     }
   `;
 
@@ -130,6 +130,9 @@ const Review: React.FC = () => {
           <p css={clueStyles}>{state.review.current.meaning}</p>
           <div css={inputWrapper}>
             <input
+              autoCorrect="false"
+              autoComplete="false"
+              autoCapitalize="false"
               ref={inputRef}
               css={answerInputStyles}
               type="text"
