@@ -5,8 +5,8 @@ import ButtonClose from "../forms/button-close";
 import Loading from "../loading";
 import ButtonSubmit from "../forms/button-submit";
 import Final from "./final";
+import Level from "./level";
 import { Packages } from "../../../types";
-import { KeyboardEventHandler } from "react";
 
 const Review: React.FC = () => {
   const { state, actions } = useConnect<Packages>();
@@ -83,6 +83,7 @@ const Review: React.FC = () => {
     text-align: center;
     font-size: 22px;
     margin: 24px;
+    margin-bottom: 12px;
   `;
 
   const answerInputStyles = css`
@@ -91,7 +92,7 @@ const Review: React.FC = () => {
     border: none;
     background-color: ${state.theme.colors.bgOne};
     color: ${state.theme.colors.textOne};
-    height: 200px;
+    height: 170px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -128,6 +129,7 @@ const Review: React.FC = () => {
         <form css={containerStyles} onSubmit={handleSubmit}>
           <h2 css={titleStyles}>Reviewing {title}</h2>
           <p css={clueStyles}>{state.review.current.meaning}</p>
+          <Level />
           <div css={inputWrapper}>
             <input
               autoCorrect="false"
